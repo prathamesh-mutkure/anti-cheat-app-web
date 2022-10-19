@@ -20,7 +20,7 @@ const HomePage = () => {
   return (
     <div>
       <h1>Anti-Cheat Exam App</h1>
-      <h3>Langing Page</h3>
+      <h3>Landing Page</h3>
     </div>
   );
 };

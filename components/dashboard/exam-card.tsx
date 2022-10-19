@@ -5,6 +5,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 import { AssignedExam } from "../../models/exam-models";
 import styles from "./exam-card.module.scss";
 
@@ -22,7 +23,9 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Start Exam</Button>
+          <Link href={`/exam/${exam._id}`}>
+            <Button size="small">Start Exam</Button>
+          </Link>
         </CardActions>
       </Card>
     </div>
