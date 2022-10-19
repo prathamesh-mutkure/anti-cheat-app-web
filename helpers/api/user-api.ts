@@ -11,6 +11,11 @@ const getUser = async (id: string, password: string) => {
       },
     });
 
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.err || "Unable to signin");
+    }
+
     const data = await res.json();
 
     return {
