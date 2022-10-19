@@ -1,5 +1,6 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
+import { getUser } from "../../helpers/api/user-api";
 import { useAppDispatch } from "../../hooks";
 import { userActions } from "../../store/user-store";
 import classes from "./login-form.module.scss";
@@ -11,6 +12,8 @@ const LoginForm = () => {
     id: "1800760308",
     password: "12345678",
   });
+
+  const { id, password } = formData;
 
   const [lodading, setLodading] = useState(false);
 
@@ -26,33 +29,17 @@ const LoginForm = () => {
     setLodading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/login", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      const user = await getUser(id, password);
 
-      const data = await res.json();
+      dispatch(userActions.setUser(user));
 
-      dispatch(
-        userActions.setUser({
-          id: data?.id,
-          fname: data?.fname,
-          lname: data?.lname,
-        })
-      );
-
+      window.location.href = "/";
       // TODO: save user to localStorage
-
-      console.log(data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLodading(false);
     }
-
-    setLodading(false);
   };
 
   return (
@@ -62,14 +49,14 @@ const LoginForm = () => {
       <Grid direction="column" container>
         <TextField
           name="id"
-          value={formData.id}
+          value={id}
           label="ID"
           onChange={handleInputChange}
           type="text"
         />
         <TextField
           name="password"
-          value={formData.password}
+          value={password}
           label="Password"
           onChange={handleInputChange}
           type="password"
