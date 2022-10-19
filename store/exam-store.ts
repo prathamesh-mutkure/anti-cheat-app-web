@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ExamStore {
-  currentExam: {};
-  assignedExams: [];
+  currentExam: any;
+  assignedExams: any[];
 }
 
 const initialState: ExamStore = {
@@ -13,7 +13,14 @@ const initialState: ExamStore = {
 const examSlice = createSlice({
   name: "exam",
   initialState,
-  reducers: {},
+  reducers: {
+    setAssignedExams: (
+      state: ExamStore,
+      action: PayloadAction<typeof initialState.assignedExams>
+    ) => {
+      state.assignedExams = action.payload;
+    },
+  },
 });
 
 const examActions = examSlice.actions;
