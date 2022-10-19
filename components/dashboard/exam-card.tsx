@@ -3,12 +3,13 @@ import {
   Card,
   CardActions,
   CardContent,
-  Container,
   Typography,
 } from "@mui/material";
+import { AssignedExam } from "../../store/exam-store";
+import styles from "./exam-card.module.scss";
 
 interface ExamCardProps {
-  exam: any;
+  exam: AssignedExam;
 }
 
 const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {

@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
-import { examActions } from "../../store/exam-store";
+import { AssignedExam, examActions } from "../../store/exam-store";
 
 interface DashboardPageProps {
-  exams: any[];
+  exams: AssignedExam[];
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
@@ -24,7 +24,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
-  const assignedExams = await getAssignedExams("1800760308");
+  const assignedExams: AssignedExam[] = await getAssignedExams("1800760308");
 
   return {
     props: {

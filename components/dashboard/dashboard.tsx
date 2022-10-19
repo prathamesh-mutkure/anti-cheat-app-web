@@ -16,8 +16,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
       <h1>Dashboard</h1>
 
       <Grid container direction="column" spacing={4}>
-        {assignedExams.map((exam, i) => (
-          <Grid key={i} item>
+        {assignedExams.map((exam) => (
+          <Grid key={exam._id} item>
             <ExamCard exam={exam} />
           </Grid>
         ))}
