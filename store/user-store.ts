@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 
 export interface UserState {
   user: {
@@ -17,7 +18,19 @@ const initialState: UserState = {
 const userSlice = createSlice({
   name: "user",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setUser: (
+      state: UserState,
+      action: PayloadAction<typeof initialState.user>
+    ) => {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+    },
+
+    removeUser: (state: UserState) => {
+      state = initialState;
+    },
+  },
 });
 
 const userActions = userSlice.actions;

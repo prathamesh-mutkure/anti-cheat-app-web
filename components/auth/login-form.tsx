@@ -1,8 +1,12 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { MouseEventHandler, useState } from "react";
+import { useAppDispatch } from "../../hooks";
+import { userActions } from "../../store/user-store";
 import classes from "./login-form.module.scss";
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
+
   const [formData, setData] = useState({
     id: "1800760308",
     password: "12345678",
@@ -33,8 +37,15 @@ const LoginForm = () => {
 
       const data = await res.json();
 
-      // TODO: Call redux methods
-      // Store user
+      dispatch(
+        userActions.setUser({
+          id: data?.id,
+          fname: data?.fname,
+          lname: data?.lname,
+        })
+      );
+
+      // TODO: save user to localStorage
 
       console.log(data);
     } catch (e) {
@@ -54,12 +65,14 @@ const LoginForm = () => {
           value={formData.id}
           label="ID"
           onChange={handleInputChange}
+          type="text"
         />
         <TextField
           name="password"
           value={formData.password}
           label="Password"
           onChange={handleInputChange}
+          type="password"
         />
 
         <Button onClick={handleSubmit}>Submit</Button>
