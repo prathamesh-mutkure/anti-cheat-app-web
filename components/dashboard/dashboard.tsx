@@ -1,11 +1,11 @@
 import { Container } from "@mui/material";
 
-const Home = () => {
+const Dashboard = () => {
   return (
     <Container maxWidth="md">
-      <h1>Home</h1>
+      <h1>Dashboard</h1>
     </Container>
   );
 };
 
-export default Home;
+export default Dashboard;

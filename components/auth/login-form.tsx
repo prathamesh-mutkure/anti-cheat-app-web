@@ -33,7 +33,7 @@ const LoginForm = () => {
 
       dispatch(userActions.setUser(user));
 
-      window.location.href = "/";
+      window.location.href = "/dashboard";
       // TODO: save user to localStorage
     } catch (e) {
       console.log(e);
