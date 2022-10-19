@@ -1,31 +1,27 @@
 import { BASE_URL } from "../../constants";
 
-const getExam = async (id: string) => {
+const getExam = async (examId: string) => {
   try {
-    const res = await fetch(`${BASE_URL}/login`);
+    const res = await fetch(`${BASE_URL}/exam/${examId}`);
 
     const data = await res.json();
 
-    return {
-      ...data,
-    };
+    return data;
   } catch (e) {
     throw e;
   }
 };
 
-const getAssignedExams = async (id: string) => {
+const getAssignedExams = async (userId: string) => {
   try {
-    const res = await fetch(`${BASE_URL}/login`);
+    const res = await fetch(`${BASE_URL}/${userId}/assignedExams/all`);
 
     const data = await res.json();
 
-    return {
-      ...data,
-    };
+    return data.exams;
   } catch (e) {
     throw e;
   }
 };
 
-export { getExam };
+export { getExam, getAssignedExams };

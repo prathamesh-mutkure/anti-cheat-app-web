@@ -23,4 +23,23 @@ const getUser = async (id: string, password: string) => {
   }
 };
 
-export { getUser };
+const submitExam = async (id: string, exam: any) => {
+  try {
+    const res = await fetch(`${BASE_URL}/submitExam/${id}`, {
+      method: "POST",
+      body: JSON.stringify({ id, exam }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { getUser, submitExam };
