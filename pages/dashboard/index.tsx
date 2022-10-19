@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
-import { AssignedExam, examActions } from "../../store/exam-store";
+import { AssignedExam } from "../../models/exam-models";
+import { examActions } from "../../store/exam-store";
 
 interface DashboardPageProps {
   exams: AssignedExam[];
@@ -13,6 +14,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (!exams) {
+      return;
+    }
+
     dispatch(examActions.setAssignedExams(exams));
   }, [dispatch, exams]);
 

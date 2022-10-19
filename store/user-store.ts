@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { stat } from "fs";
+import { User } from "../models/user-models";
 
 export interface UserState {
-  user: {
-    id: string;
-    fname: string;
-    lname: string;
-  };
+  user: User;
   isLoggedIn: boolean;
 }
 

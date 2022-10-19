@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface AssignedExam {
-  _id: string;
-  questionCount: number;
-  name: string;
-  startDate: string;
-  endData: string;
-  duration: number;
-  status: string;
-}
+import { AssignedExam } from "../models/exam-models";
 
 export interface ExamStore {
   currentExam: any;

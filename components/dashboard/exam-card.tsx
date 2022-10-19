@@ -5,7 +5,7 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { AssignedExam } from "../../store/exam-store";
+import { AssignedExam } from "../../models/exam-models";
 import styles from "./exam-card.module.scss";
 
 interface ExamCardProps {
