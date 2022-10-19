@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AssignedExam } from "../models/exam-models";
+import { AssignedExam, Exam } from "../models/exam-models";
 
 export interface ExamStore {
-  currentExam: any;
+  activeExam: Exam;
   assignedExams: AssignedExam[];
 }
 
 const initialState: ExamStore = {
-  currentExam: null,
+  activeExam: null,
   assignedExams: [],
 };
 
@@ -15,11 +15,23 @@ const examSlice = createSlice({
   name: "exam",
   initialState,
   reducers: {
+    setActiveExam: (state: ExamStore, action: PayloadAction<Exam>) => {
+      state.activeExam = action.payload;
+    },
+
+    clearActiveExam: (state: ExamStore) => {
+      state.activeExam = null;
+    },
+
     setAssignedExams: (
       state: ExamStore,
-      action: PayloadAction<typeof initialState.assignedExams>
+      action: PayloadAction<AssignedExam[]>
     ) => {
       state.assignedExams = action.payload;
+    },
+
+    clearAssignedExams: (state: ExamStore) => {
+      state.assignedExams = [];
     },
   },
 });
