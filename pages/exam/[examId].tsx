@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import AppBarExam from "../../components/exam/app-bar-exam";
-import ExamButtons from "../../components/exam/exam-buttons";
+import ExamButtonsGroup from "../../components/exam/exam-buttons";
 import QuestionWidget from "../../components/exam/question-widget";
 import { getExam } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
@@ -44,7 +44,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
       <Grid container>
         <Grid item xs={9}>
           <QuestionWidget />
-          <ExamButtons />
+          <ExamButtonsGroup />
         </Grid>
 
         <Grid item xs={3}>
