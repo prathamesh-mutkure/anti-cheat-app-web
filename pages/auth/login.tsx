@@ -4,12 +4,6 @@ import { useEffect } from "react";
 import LoginForm from "../../components/auth/login-form";
 
 const LoginPage = () => {
-  // const session = useSession();
-
-  // useEffect(() => {
-  //   console.log(session);
-  // }, [session]);
-
   return (
     <div>
       <LoginForm />

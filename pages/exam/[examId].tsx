@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
+import AppBarExam from "../../components/exam/app-bar-exam";
 import { getExam } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
 import { Exam } from "../../models/exam-models";
@@ -19,11 +20,23 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
     dispatch(examActions.setActiveExam(exam));
   }, [dispatch, exam]);
 
+  // App Bar
+  //
+  // Question Component
+  // Previous & Next Buttons
+  //
+  // Question tracker
+  // Camera
+  //
+  //
+  // Modal Popup for error
+
   return (
-    <div>
+    <React.Fragment>
+      <AppBarExam examName={exam.name} />
       <h1>Exam Page</h1>
       <h3>{exam.name}</h3>
-    </div>
+    </React.Fragment>
   );
 };
 
