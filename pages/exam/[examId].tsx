@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import { getExam } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
@@ -27,6 +28,20 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  // TODO: Pass userid and token here
+  // Handle error with error prop
+
   const { examId } = context.params;
 
   const exam = await getExam(examId.toString());

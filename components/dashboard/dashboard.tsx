@@ -9,8 +9,6 @@ interface DashboardProps {}
 const Dashboard: React.FC<DashboardProps> = () => {
   const assignedExams = useAppSelector((state) => state.exam.assignedExams);
 
-  console.log(assignedExams);
-
   return (
     <Container maxWidth="md">
       <h1>Dashboard</h1>

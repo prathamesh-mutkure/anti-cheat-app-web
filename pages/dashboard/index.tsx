@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
@@ -29,6 +30,19 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
 };
 
 const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  // TODO: Pass user and token here
+  // Handle any potential error
   const assignedExams: AssignedExam[] = await getAssignedExams("1800760308");
 
   return {

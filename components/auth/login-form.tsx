@@ -1,4 +1,6 @@
 import { Button, Grid, TextField } from "@mui/material";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { MouseEventHandler, useState } from "react";
 import { getUser } from "../../helpers/api/user-api";
 import { useAppDispatch } from "../../hooks";
@@ -7,6 +9,7 @@ import classes from "./login-form.module.scss";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [formData, setData] = useState({
     id: "1800760308",
@@ -28,18 +31,34 @@ const LoginForm = () => {
     e.preventDefault();
     setLodading(true);
 
+    // TODO: form validation
+
     try {
-      const user = await getUser(id, password);
+      // const user = await getUser(id, password);
+      // dispatch(userActions.setUser(user));
 
-      dispatch(userActions.setUser(user));
+      const result = await signIn("credentials", {
+        redirect: false,
+        id: id,
+        password: password,
+      });
 
-      window.location.href = "/dashboard";
-      // TODO: save user to localStorage
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      if (result.ok) {
+        router.replace("/dashboard");
+      }
     } catch (e) {
       console.log(e);
     } finally {
       setLodading(false);
     }
+  };
+
+  const handleLogout = () => {
+    signOut({ redirect: false });
   };
 
   return (
@@ -63,6 +82,7 @@ const LoginForm = () => {
         />
 
         <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleLogout}>Logout</Button>
       </Grid>
     </div>
   );
