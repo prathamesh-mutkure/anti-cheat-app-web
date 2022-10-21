@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
+import QuestionTracker from "../../components/exam/question-tracker";
 import QuestionWidget from "../../components/exam/question-widget";
 import { getExam } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
@@ -48,7 +49,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
         </Grid>
 
         <Grid item xs={3}>
-          <h3>{exam.name}</h3>
+          <QuestionTracker />
         </Grid>
       </Grid>
     </React.Fragment>
