@@ -21,6 +21,8 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   // TODO:
   // This screen should be full screen
   // Timer state changes saved every 30 secs
+  //
+  // Modal Popup for warning
 
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
@@ -34,11 +36,6 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
       dispatch(examActions.clearActiveExam());
     };
   }, [dispatch, exam]);
-
-  // TODOs:
-  //
-  // Modal Popup for warning
-  //
 
   if (error) {
     return <p>Error: {error}</p>;
