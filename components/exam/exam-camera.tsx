@@ -1,3 +1,4 @@
+import { Camera } from "@mediapipe/camera_utils";
 import {
   FaceDetection,
   Results,
@@ -13,33 +14,62 @@ import classes from "./exam-camera.module.scss";
 interface ExamCameraProps {}
 
 const ExamCamera: React.FC<ExamCameraProps> = () => {
-  const webcamRef: React.LegacyRef<Webcam> = useRef();
-  const faceDetection: FaceDetection = new FaceDetection();
   const [img_, setImg_] = useState<string>();
 
-  faceDetection.setOptions({
-    minDetectionConfidence: 0.5,
-  });
+  const webcamRef: React.LegacyRef<Webcam> = useRef();
 
-  function onResult(result: Results) {
-    console.log(result);
-  }
+  let faceDetch: FaceDetection;
 
-  faceDetection.onResults(onResult);
+  useEffect(() => {
+    const faceDetection: FaceDetection = new FaceDetection({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`;
+      },
+    });
 
-  const b64toBlob = async (base64) => fetch(base64).then((res) => res.blob());
+    faceDetection.setOptions({
+      minDetectionConfidence: 0.5,
+      model: "short",
+    });
+
+    function onResult(result: Results) {
+      console.log(result);
+    }
+
+    faceDetection.onResults(onResult);
+
+    faceDetch = faceDetection;
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null
+    ) {
+      const camera = new Camera(webcamRef.current.video, {
+        onFrame: async () => {
+          console.log("Hehe");
+
+          await faceDetection.send({ image: webcamRef.current.video });
+        },
+        width: 1280,
+        height: 720,
+      });
+
+      camera.start();
+    }
+  }, [webcamRef]);
+
+  const b64toBlob = async (base64: string) =>
+    fetch(base64).then((res) => res.blob());
 
   const onResultClick = async () => {
-    const imgSrc = webcamRef.current.getScreenshot();
+    // const imgSrc = webcamRef.current.getScreenshot();
+    // const blob = await b64toBlob(imgSrc);
+    // const img = new Image(600, 400);
+    // const src = URL.createObjectURL(blob);
+    // img.src = src;
+    // setImg_(src);
+    // await faceDetection.send({ image: webcamRef.current.video });
 
-    const blob = await b64toBlob(imgSrc);
-    const img = new Image();
-
-    const src = URL.createObjectURL(blob);
-    img.src = src;
-
-    setImg_(src);
-    await faceDetection.send({ image: img });
+    await faceDetch?.send({ image: webcamRef.current.video });
   };
 
   return (

@@ -85,8 +85,6 @@ const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const exam = await getExam(examId.toString());
 
-    console.log(exam);
-
     return {
       props: {
         exam: exam,
