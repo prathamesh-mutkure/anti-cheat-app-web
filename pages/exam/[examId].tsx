@@ -2,9 +2,9 @@ import { Grid } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
-import Webcam from "react-webcam";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
+import ExamCamera from "../../components/exam/exam-camera";
 import QuestionTracker from "../../components/exam/question-tracker";
 import QuestionWidget from "../../components/exam/question-widget";
 import { getExam } from "../../helpers/api/exam-api";
@@ -20,7 +20,7 @@ interface ExamPageProps {
 const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   // TODO:
   // This screen should be full screen
-  // Timer state changes every 30 secs
+  // Timer state changes saved every 30 secs
 
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
@@ -37,17 +37,8 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 
   // TODOs:
   //
-  // App Bar ... DONE
-  //
-  // Question Component ... DONE
-  // Previous & Next Buttons ... DONE
-  //
-  // Question tracker ... DONE
-  // Camera
-  //
-  // Make everything responsive ...DONE
-  //
   // Modal Popup for warning
+  //
 
   if (error) {
     return <p>Error: {error}</p>;
@@ -66,15 +57,14 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
       <AppBarExam examName={activeExam.exam.name} />
 
       <Grid container>
-        <Grid item xs={9}>
+        <Grid item xs={9} alignItems="stretch" alignContent="space-between">
           <QuestionWidget />
           <ExamButtonsGroup />
         </Grid>
 
         <Grid item xs={3}>
           <QuestionTracker />
-          {/* Camera Here */}
-          <Webcam />
+          <ExamCamera />
         </Grid>
       </Grid>
     </React.Fragment>

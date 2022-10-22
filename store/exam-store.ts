@@ -31,6 +31,16 @@ const examSlice = createSlice({
       state.activeExam = null;
     },
 
+    goToQuestion: (state: ExamStore, action: PayloadAction<number>) => {
+      const questionNo = action.payload;
+
+      if (questionNo < 0 || questionNo >= state.activeExam.exam.questionCount) {
+        return;
+      }
+
+      state.activeExam.currentQuestion = questionNo;
+    },
+
     nextQuestion: (state: ExamStore) => {
       const { exam, currentQuestion } = state.activeExam;
 

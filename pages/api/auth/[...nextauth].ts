@@ -4,9 +4,10 @@ import { getUser } from "../../../helpers/api/user-api";
 import { User } from "../../../models/user-models";
 
 export const authOptions: NextAuthOptions = {
-  // session: {
-  //   strategy: "jwt",
-  // },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60,
+  },
   callbacks: {
     session: async (params) => {
       // console.log("PARAMS: ");
@@ -23,9 +24,6 @@ export const authOptions: NextAuthOptions = {
         password: { type: "text" },
       },
       authorize: async (credentials, req) => {
-        console.log(credentials);
-        console.log(req.body);
-
         try {
           const { id, password } = credentials;
           const user: User = await getUser(id, password);

@@ -1,23 +1,27 @@
 import { Avatar, Grid } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { examActions } from "../../store/exam-store";
 import classes from "./question-tracker.module.scss";
 
 interface QuestionTrackerProps {}
 
 interface QuestionCircleProps {
   questionNumber: number | string;
+  onClick?: () => void;
   highlight?: boolean;
 }
 
 const QuestionCircle: React.FC<QuestionCircleProps> = ({
   questionNumber,
+  onClick,
   highlight = false,
 }) => {
   return (
     <>
       <Grid item xs={2} justifyContent="center">
         <Avatar
+          onClick={onClick}
           sx={{
             border: highlight ? "solid 3px black" : "",
           }}
@@ -34,18 +38,24 @@ const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
   // Labels for colors of circles
   // Save answes using onChange of <Radio>
 
+  // TODO: Maybe move highlight logic to circle component
+
+  const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam.exam);
+
   const currentQuestion = useAppSelector(
     (state) => state.exam.activeExam.currentQuestion
   );
+
+  const onClick = (index: number) => {
+    dispatch(examActions.goToQuestion(index));
+  };
 
   if (!activeExam) {
     return <p>Error</p>;
   }
 
   const { questionCount } = activeExam;
-
-  // TODO: Maybe move highlight logic to circle component
 
   return (
     <React.Fragment>
@@ -55,6 +65,7 @@ const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
             key={i}
             questionNumber={i + 1}
             highlight={currentQuestion == i}
+            onClick={() => onClick(i)}
           />
         ))}
       </Grid>

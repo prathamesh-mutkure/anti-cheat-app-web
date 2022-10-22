@@ -1,3 +1,5 @@
+import { Button } from "@mui/material";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector } from "../hooks";
@@ -19,6 +21,10 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
     <div>
       <h1>Anti-Cheat Exam App</h1>
       <h3>Landing Page</h3>
+
+      <Link href="/auth/login">
+        <Button>Login</Button>
+      </Link>
     </div>
   );
 };
