@@ -7,22 +7,27 @@ import ExamButtonsGroup from "../../components/exam/exam-buttons";
 import QuestionTracker from "../../components/exam/question-tracker";
 import QuestionWidget from "../../components/exam/question-widget";
 import { getExam } from "../../helpers/api/exam-api";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Exam } from "../../models/exam-models";
 import { examActions } from "../../store/exam-store";
 
 interface ExamPageProps {
   exam: Exam;
+  error: string;
 }
 
-const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
+const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   const dispatch = useAppDispatch();
+  const activeExam = useAppSelector((state) => state.exam.activeExam);
 
   useEffect(() => {
     if (!exam) return;
 
     dispatch(examActions.setActiveExam(exam));
-    console.log(exam);
+
+    return () => {
+      dispatch(examActions.clearActiveExam());
+    };
   }, [dispatch, exam]);
 
   // TODOs:
@@ -36,11 +41,23 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam }) => {
   // Camera
   //
   //
-  // Modal Popup for error
+  // Modal Popup for warning
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!activeExam) {
+    return <p>Loading...</p>;
+  }
+
+  if (activeExam._id !== exam._id) {
+    return <p>Error!</p>;
+  }
 
   return (
     <React.Fragment>
-      <AppBarExam examName={exam.name} />
+      <AppBarExam examName={activeExam.name} />
 
       <Grid container>
         <Grid item xs={9}>
@@ -68,18 +85,28 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  // TODO: Pass userid and token here
-  // Handle error with error prop
-
   const { examId } = context.params;
 
-  const exam = await getExam(examId.toString());
+  try {
+    const exam = await getExam(examId.toString());
 
-  return {
-    props: {
-      exam: exam,
-    },
-  };
+    console.log(exam);
+
+    return {
+      props: {
+        exam: exam,
+        error: null,
+      },
+    };
+  } catch (e) {
+    // TODO: Return error in error prop
+    return {
+      props: {
+        exam: null,
+        error: "Failed to get exam!",
+      },
+    };
+  }
 };
 
 export default ExamPage;

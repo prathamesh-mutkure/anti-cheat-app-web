@@ -11,12 +11,12 @@ const getUser = async (id: string, password: string) => {
       },
     });
 
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.err || "Unable to signin");
-    }
-
     const data = await res.json();
+
+    if (!res.ok || data.err) {
+      const data = await res.json();
+      throw new Error(data.err || "Failed to signin user!");
+    }
 
     return {
       id: data?.id,
@@ -40,6 +40,10 @@ const submitExam = async (id: string, exam: any) => {
     });
 
     const data = await res.json();
+
+    if (!res.ok || data.err) {
+      throw new Error(data.err || "Failed to submit exam!");
+    }
 
     return data;
   } catch (e) {

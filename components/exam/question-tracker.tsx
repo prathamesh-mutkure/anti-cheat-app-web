@@ -20,9 +20,13 @@ const QuestionCircle: React.FC<QuestionCircleProps> = ({ questionNumber }) => {
 };
 
 const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
-  const questionCount = useAppSelector(
-    (state) => state.exam.activeExam.questionCount
-  );
+  const activeExam = useAppSelector((state) => state.exam.activeExam);
+
+  if (!activeExam) {
+    return <p>Error</p>;
+  }
+
+  const { questionCount } = activeExam;
 
   return (
     <React.Fragment>
