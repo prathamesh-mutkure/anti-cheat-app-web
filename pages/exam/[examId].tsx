@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import React, { useEffect } from "react";
+import Webcam from "react-webcam";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
 import QuestionTracker from "../../components/exam/question-tracker";
@@ -17,6 +18,10 @@ interface ExamPageProps {
 }
 
 const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
+  // TODO:
+  // This screen should be full screen
+  // Timer state changes every 30 secs
+
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 
@@ -68,6 +73,8 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 
         <Grid item xs={3}>
           <QuestionTracker />
+          {/* Camera Here */}
+          <Webcam />
         </Grid>
       </Grid>
     </React.Fragment>
