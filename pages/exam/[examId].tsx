@@ -32,14 +32,15 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 
   // TODOs:
   //
-  // App Bar
+  // App Bar ... DONE
   //
-  // Question Component
-  // Previous & Next Buttons
+  // Question Component ... DONE
+  // Previous & Next Buttons ... DONE
   //
-  // Question tracker
+  // Question tracker ... DONE
   // Camera
   //
+  // Make everything responsive ...DONE
   //
   // Modal Popup for warning
 
@@ -51,13 +52,13 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     return <p>Loading...</p>;
   }
 
-  if (activeExam._id !== exam._id) {
+  if (activeExam.exam._id !== exam._id) {
     return <p>Error!</p>;
   }
 
   return (
     <React.Fragment>
-      <AppBarExam examName={activeExam.name} />
+      <AppBarExam examName={activeExam.exam.name} />
 
       <Grid container>
         <Grid item xs={9}>
@@ -99,7 +100,8 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
-    // TODO: Return error in error prop
+    // TODO: Return error message in error prop
+    // For all getServerSideProp checks
     return {
       props: {
         exam: null,

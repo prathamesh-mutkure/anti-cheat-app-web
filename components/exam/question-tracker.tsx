@@ -7,20 +7,37 @@ interface QuestionTrackerProps {}
 
 interface QuestionCircleProps {
   questionNumber: number | string;
+  highlight?: boolean;
 }
 
-const QuestionCircle: React.FC<QuestionCircleProps> = ({ questionNumber }) => {
+const QuestionCircle: React.FC<QuestionCircleProps> = ({
+  questionNumber,
+  highlight = false,
+}) => {
   return (
     <>
       <Grid item xs={2} justifyContent="center">
-        <Avatar>{questionNumber}</Avatar>
+        <Avatar
+          sx={{
+            border: highlight ? "solid 3px black" : "",
+          }}
+        >
+          {questionNumber}
+        </Avatar>
       </Grid>
     </>
   );
 };
 
 const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
-  const activeExam = useAppSelector((state) => state.exam.activeExam);
+  // TODO:
+  // Labels for colors of circles
+  // Save answes using onChange of <Radio>
+
+  const activeExam = useAppSelector((state) => state.exam.activeExam.exam);
+  const currentQuestion = useAppSelector(
+    (state) => state.exam.activeExam.currentQuestion
+  );
 
   if (!activeExam) {
     return <p>Error</p>;
@@ -28,11 +45,17 @@ const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
 
   const { questionCount } = activeExam;
 
+  // TODO: Maybe move highlight logic to circle component
+
   return (
     <React.Fragment>
       <Grid container rowSpacing={2} justifyContent="center">
         {Array.from(Array(questionCount).keys()).map((i) => (
-          <QuestionCircle key={i} questionNumber={i + 1} />
+          <QuestionCircle
+            key={i}
+            questionNumber={i + 1}
+            highlight={currentQuestion == i}
+          />
         ))}
       </Grid>
     </React.Fragment>

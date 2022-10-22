@@ -1,5 +1,7 @@
 import { Button, Grid } from "@mui/material";
 import React from "react";
+import { useAppDispatch } from "../../hooks";
+import { examActions } from "../../store/exam-store";
 import classes from "./exam-buttons.module.scss";
 
 interface ExamButtonsGroupProps {}
@@ -27,12 +29,15 @@ const ExamButton: React.FC<ExamButtonProps> = ({ label, onTap, color }) => {
 };
 
 const ExamButtonsGroup: React.FC<ExamButtonsGroupProps> = () => {
-  // TODO: Implement below functions
-  // Incorporate activeQuestion index
+  const dispatch = useAppDispatch();
 
-  const onPreviousClicked = () => {};
+  const onPreviousClicked = () => {
+    dispatch(examActions.prevQuestion());
+  };
 
-  const onNextClicked = () => {};
+  const onNextClicked = () => {
+    dispatch(examActions.nextQuestion());
+  };
 
   return (
     <React.Fragment>

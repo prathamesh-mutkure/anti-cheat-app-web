@@ -12,21 +12,21 @@ import classes from "./question-widget.module.scss";
 interface QuestionWidgetProp {}
 
 const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
-  // ERROR HANDLING
-  // Redirect if no active exam
-
-  const activeExam = useAppSelector((state) => state.exam.activeExam);
+  const activeExam = useAppSelector((state) => state.exam.activeExam.exam);
+  const currentQuestion = useAppSelector(
+    (state) => state.exam.activeExam.currentQuestion
+  );
 
   if (!activeExam?.questions) {
     return <p>No Question!</p>;
   }
 
   const { questions } = activeExam;
-  const question = questions[0];
+  const question = questions[currentQuestion];
 
   return (
     <React.Fragment>
-      <p>{question.title}</p>
+      <p>{`${currentQuestion + 1}. ${question.title}`}</p>
 
       <FormControl>
         <RadioGroup
