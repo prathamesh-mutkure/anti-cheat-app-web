@@ -1,16 +1,11 @@
 import { Camera } from "@mediapipe/camera_utils";
-import {
-  FaceDetection,
-  Results,
-  ResultsListener,
-} from "@mediapipe/face_detection";
+import { FaceDetection, Results } from "@mediapipe/face_detection";
 import { Button } from "@mui/material";
 import NextImage from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { b64toBlob } from "../../helpers/face-detection/image-helper";
 import classes from "./exam-camera.module.scss";
-// const base64Img = require("base64-img");
 
 interface ExamCameraProps {}
 
@@ -38,7 +33,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     faceDetection.onResults(onResult);
     faceDetectionRef.current = faceDetection;
 
-    if (!webcamRef.current) {
+    if (webcamRef.current) {
       const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
           // await faceDetection.send({ image: webcamRef.current.video });
@@ -64,11 +59,11 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
   return (
     <div>
-      <Webcam
+      {/* <Webcam
         className={classes.camera}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-      />
+      /> */}
       <Button onClick={onResultClick}>Get Result</Button>
 
       {img_ && <NextImage src={img_} alt="Profile" />}
