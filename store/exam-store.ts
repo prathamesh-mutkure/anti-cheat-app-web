@@ -30,7 +30,7 @@ const examSlice = createSlice({
         leftExamCount: 0,
         tabChangeCount: 0,
         didLeaveExam: false,
-        answerKeys: [],
+        answerKeys: Array(action.payload.questionCount).fill(null),
         countdown: "",
       };
 
@@ -69,6 +69,19 @@ const examSlice = createSlice({
       }
 
       state.activeExam.currentQuestion -= 1;
+    },
+
+    setAnswer: (
+      state: ExamStore,
+      action: PayloadAction<{ questionNo: number; answerKey: string }>
+    ) => {
+      const { questionNo, answerKey } = action.payload;
+
+      if (questionNo < 0 || questionNo >= state.activeExam.exam.questionCount) {
+        return;
+      }
+
+      state.activeExam.answerKeys[questionNo] = answerKey;
     },
 
     setAssignedExams: (

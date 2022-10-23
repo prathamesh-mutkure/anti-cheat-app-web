@@ -6,23 +6,38 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { examActions } from "../../store/exam-store";
 import classes from "./question-widget.module.scss";
 
 interface QuestionWidgetProp {}
 
 const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
-  const activeExam = useAppSelector((state) => state.exam.activeExam.exam);
+  const dispatch = useAppDispatch();
+  const activeExam = useAppSelector((state) => state.exam.activeExam);
   const currentQuestion = useAppSelector(
     (state) => state.exam.activeExam.currentQuestion
   );
 
-  if (!activeExam?.questions) {
+  if (!activeExam?.exam?.questions) {
     return <p>No Question!</p>;
   }
 
-  const { questions } = activeExam;
+  const {
+    exam: { questions },
+    answerKeys,
+  } = activeExam;
+
   const question = questions[currentQuestion];
+
+  const onAnswerChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    val: string
+  ) => {
+    dispatch(
+      examActions.setAnswer({ questionNo: currentQuestion, answerKey: val })
+    );
+  };
 
   return (
     <React.Fragment>
@@ -33,6 +48,8 @@ const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
           aria-labelledby="demo-radio-buttons-group-label"
           defaultValue="female"
           name="radio-buttons-group"
+          value={answerKeys[currentQuestion]}
+          onChange={onAnswerChange}
         >
           {Object.entries(question.options).map(
             ([option, label]: [string, string]) => {
@@ -42,6 +59,7 @@ const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
                   value={option}
                   control={<Radio />}
                   label={label}
+                  // onChange={}
                 />
               );
             }

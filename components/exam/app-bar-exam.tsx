@@ -2,12 +2,19 @@ import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ExamTimer from "./exam-timer";
 import classes from "./app-bar-exam.module.scss";
+import { useAppSelector } from "../../hooks";
 
 interface AppBarExamProps {
   examName: string;
 }
 
 const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
+  const activeExam = useAppSelector((state) => state.exam.activeExam);
+
+  const onEndExam = () => {
+    console.log(activeExam.answerKeys);
+  };
+
   return (
     <>
       <AppBar position="static">
@@ -32,6 +39,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
             sx={{
               backgroundColor: "red",
             }}
+            onClick={onEndExam}
           >
             End Exam
           </Button>
