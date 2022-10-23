@@ -12,18 +12,40 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Exam } from "../../models/exam-models";
 import { examActions } from "../../store/exam-store";
 
+// TODO (CHEAT DETECTION):
+//
+// Detect user changing tab
+// If change tab more than 3 times, submit exam
+//
+// Save answer keys and timer after every answer selection
+//
+// Give warning when refresh of close tab
+// using window events
+//
+// If user starts exam again without submitting exam, then
+// Then load answers and keys
+// Only within given time period of exam
+//
+// Cannot give exam again after submitting
+
+// TODO (UI):
+//
+// Make the timer work
+//
+// This screen should be full screen
+// Timer state changes saved every 30 secs
+//
+// Modal Popup for warning
+//
+// Block interactions while loading
+//
+
 interface ExamPageProps {
   exam: Exam;
   error: string;
 }
 
 const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
-  // TODO:
-  // This screen should be full screen
-  // Timer state changes saved every 30 secs
-  //
-  // Modal Popup for warning
-
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 

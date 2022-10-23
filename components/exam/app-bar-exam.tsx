@@ -4,6 +4,10 @@ import ExamTimer from "./exam-timer";
 import classes from "./app-bar-exam.module.scss";
 import { useAppSelector } from "../../hooks";
 
+// TODO:
+// Submit exam here using APIs
+//
+
 interface AppBarExamProps {
   examName: string;
 }
