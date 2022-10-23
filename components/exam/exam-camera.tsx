@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import NextImage from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
+import { b64toBlob } from "../../helpers/face-detection/image-helper";
 import classes from "./exam-camera.module.scss";
 // const base64Img = require("base64-img");
 
@@ -15,10 +16,8 @@ interface ExamCameraProps {}
 
 const ExamCamera: React.FC<ExamCameraProps> = () => {
   const [img_, setImg_] = useState<string>();
-
   const webcamRef: React.LegacyRef<Webcam> = useRef();
-
-  let faceDetch: FaceDetection;
+  const faceDetectionRef = useRef<FaceDetection>(null);
 
   useEffect(() => {
     const faceDetection: FaceDetection = new FaceDetection({
@@ -37,17 +36,12 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     }
 
     faceDetection.onResults(onResult);
+    faceDetectionRef.current = faceDetection;
 
-    faceDetch = faceDetection;
-    if (
-      typeof webcamRef.current !== "undefined" &&
-      webcamRef.current !== null
-    ) {
+    if (!webcamRef.current) {
       const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
-          console.log("Hehe");
-
-          await faceDetection.send({ image: webcamRef.current.video });
+          // await faceDetection.send({ image: webcamRef.current.video });
         },
         width: 1280,
         height: 720,
@@ -57,9 +51,6 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     }
   }, [webcamRef]);
 
-  const b64toBlob = async (base64: string) =>
-    fetch(base64).then((res) => res.blob());
-
   const onResultClick = async () => {
     // const imgSrc = webcamRef.current.getScreenshot();
     // const blob = await b64toBlob(imgSrc);
@@ -67,9 +58,8 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     // const src = URL.createObjectURL(blob);
     // img.src = src;
     // setImg_(src);
-    // await faceDetection.send({ image: webcamRef.current.video });
 
-    await faceDetch?.send({ image: webcamRef.current.video });
+    await faceDetectionRef?.current?.send({ image: webcamRef.current.video });
   };
 
   return (
