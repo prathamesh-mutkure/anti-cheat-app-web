@@ -45,9 +45,6 @@ const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
 
       <FormControl>
         <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
-          name="radio-buttons-group"
           value={answerKeys[currentQuestion]}
           onChange={onAnswerChange}
         >
@@ -59,7 +56,6 @@ const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
                   value={option}
                   control={<Radio />}
                   label={label}
-                  // onChange={}
                 />
               );
             }

@@ -3,9 +3,13 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ExamTimer from "./exam-timer";
 import classes from "./app-bar-exam.module.scss";
 import { useAppSelector } from "../../hooks";
+import { submitExam } from "../../helpers/api/user-api";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 // TODO:
-// Submit exam here using APIs
+//
+// Handle Loading statewide
 //
 
 interface AppBarExamProps {
@@ -14,9 +18,25 @@ interface AppBarExamProps {
 
 const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
   const activeExam = useAppSelector((state) => state.exam.activeExam);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onEndExam = () => {
-    console.log(activeExam.answerKeys);
+  const onEndExam = async () => {
+    setIsLoading(true);
+
+    try {
+      const result = await submitExam(
+        "1800760308",
+        activeExam.exam._id,
+        activeExam.answerKeys
+      );
+
+      router.replace("/dashboard");
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -42,8 +62,10 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
             color="inherit"
             sx={{
               backgroundColor: "red",
+              opacity: isLoading ? 0.8 : 1,
             }}
             onClick={onEndExam}
+            disabled={isLoading}
           >
             End Exam
           </Button>

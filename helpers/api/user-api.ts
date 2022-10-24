@@ -28,11 +28,15 @@ const getUser = async (id: string, password: string) => {
   }
 };
 
-const submitExam = async (id: string, exam: any) => {
+const submitExam = async (
+  studentId: string,
+  examId: string,
+  answers: string[]
+) => {
   try {
-    const res = await fetch(`${BASE_URL}/submitExam/${id}`, {
+    const res = await fetch(`${BASE_URL}/submitExam/${studentId}`, {
       method: "POST",
-      body: JSON.stringify({ id, exam }),
+      body: JSON.stringify({ examId, answers }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
