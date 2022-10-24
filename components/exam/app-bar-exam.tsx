@@ -6,6 +6,7 @@ import { useAppSelector } from "../../hooks";
 import { submitExam } from "../../helpers/api/user-api";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 // TODO:
 //
@@ -34,6 +35,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
       router.replace("/dashboard");
     } catch (e) {
       console.log(e);
+      toast(e.message || "Failed to submit exam, please try again!");
     } finally {
       setIsLoading(false);
     }

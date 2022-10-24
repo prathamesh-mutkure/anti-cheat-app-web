@@ -10,10 +10,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: async (params) => {
-      // console.log("PARAMS: ");
-
-      // console.log(params);
-
       return params.session;
     },
   },
@@ -34,7 +30,7 @@ export const authOptions: NextAuthOptions = {
 
           return null;
         } catch (e) {
-          throw e;
+          throw new Error(e.message || "Login Failed!");
         }
       },
     }),

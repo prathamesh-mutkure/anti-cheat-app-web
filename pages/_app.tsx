@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps?.session}>
       <Provider store={store}>
         <Component {...pageProps} />
-        <ToastContainer />
+        <ToastContainer position="bottom-center" theme="light" />
       </Provider>
     </SessionProvider>
   );

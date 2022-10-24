@@ -6,6 +6,7 @@ import { getUser } from "../../helpers/api/user-api";
 import { useAppDispatch } from "../../hooks";
 import { userActions } from "../../store/user-store";
 import classes from "./login-form.module.scss";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +53,9 @@ const LoginForm = () => {
       }
     } catch (e) {
       console.log(e);
+      toast(e.message || "Login failed, please try again!");
+
+      // TODO: Fix login error message
     } finally {
       setLodading(false);
     }
