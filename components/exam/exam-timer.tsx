@@ -1,12 +1,26 @@
 import React from "react";
+import { useAppSelector } from "../../hooks";
+import { useTimer } from "react-timer-hook";
 import classes from "./exam-timer.module.scss";
 
-interface ExamTimerProps {}
+interface ExamTimerProps {
+  onTimerEnd: () => void;
+}
 
-const ExamTimer: React.FC<ExamTimerProps> = () => {
+const ExamTimer: React.FC<ExamTimerProps> = ({ onTimerEnd }) => {
+  const activeExam = useAppSelector((state) => state.exam.activeExam);
+
+  const examExpiryDate = new Date();
+  examExpiryDate.setSeconds(activeExam.expiresOn);
+
+  const { minutes, seconds } = useTimer({
+    expiryTimestamp: examExpiryDate,
+    onExpire: onTimerEnd,
+  });
+
   return (
     <React.Fragment>
-      <p>30:00</p>
+      <p>{`${minutes}:${seconds}`}</p>
     </React.Fragment>
   );
 };

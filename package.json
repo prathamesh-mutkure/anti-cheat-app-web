@@ -22,6 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.4",
+    "react-timer-hook": "^3.0.5",
     "react-webcam": "^7.0.1"
   },
   "devDependencies": {

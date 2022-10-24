@@ -56,7 +56,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
             {examName}
           </Typography>
 
-          <ExamTimer />
+          <ExamTimer onTimerEnd={onEndExam} />
 
           <Button
             color="inherit"
