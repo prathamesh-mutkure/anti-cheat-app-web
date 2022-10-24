@@ -1,4 +1,6 @@
 import "../styles/globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Provider } from "react-redux";
 import store from "../store/index";
@@ -10,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps?.session}>
       <Provider store={store}>
         <Component {...pageProps} />
+        <ToastContainer />
       </Provider>
     </SessionProvider>
   );
