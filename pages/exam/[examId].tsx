@@ -19,16 +19,14 @@ import {
   usePageVisibility,
 } from "../../helpers/app/visibility-event";
 import WarningModal from "../../components/exam/exam-modals";
+import { useRouter } from "next/router";
 
 // TODO (CHEAT DETECTION):
 //
-// Detect user changing tab
 // If change tab more than 3 times, submit exam
 //
 // Save answer keys and timer after every answer selection
-//
-// Give warning when refresh of close tab
-// using window events
+// Create new API for it
 //
 // If user starts exam again without submitting exam, then
 // Then load answers and keys
@@ -51,6 +49,7 @@ interface ExamPageProps {
 
 const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 
   const [didLeaveExam, setDidLeaveExam] = useState(false);
@@ -70,6 +69,41 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
       dispatch(examActions.clearActiveExam());
     };
   }, [dispatch, exam]);
+
+  useEffect(() => {
+    const beforeUnloadEventHandler = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+
+      const warningMessage = "Are you sure you want to leave the exam?";
+
+      if (event) {
+        event.returnValue = warningMessage; // Legacy method for cross browser support
+      }
+
+      return warningMessage;
+    };
+
+    window.addEventListener("beforeunload", beforeUnloadEventHandler, {
+      capture: true,
+    });
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadEventHandler, {
+        capture: true,
+      });
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (router.asPath === window.location.pathname) {
+  //     window.onpopstate = (event: PopStateEvent) => {
+  //       event.preventDefault();
+  //       history.go(1);
+  //     };
+  //   }
+
+  //   return () => {};
+  // }, [router]);
 
   useEffect(() => {
     const hiddenProp = getBrowserDocumentHiddenProp();
