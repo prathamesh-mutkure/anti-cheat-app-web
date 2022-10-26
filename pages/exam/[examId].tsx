@@ -11,6 +11,13 @@ import { getExam } from "../../helpers/api/exam-api";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Exam } from "../../models/exam-models";
 import { examActions } from "../../store/exam-store";
+import { toast } from "react-toastify";
+import {
+  getBrowserDocumentHiddenProp,
+  getBrowserVisibilityProp,
+  getVisibilityEventNames,
+  usePageVisibility,
+} from "../../helpers/app/visibility-event";
 
 // TODO (CHEAT DETECTION):
 //
@@ -59,6 +66,34 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     };
   }, [dispatch, exam]);
 
+  // const isVisible = usePageVisibility();
+
+  useEffect(() => {
+    const hiddenProp = getBrowserDocumentHiddenProp();
+    const visibilityChangeEventName = getBrowserVisibilityProp();
+
+    const onVisibilityChange = () => {
+      if (document[hiddenProp]) {
+        console.log("Hidden");
+      } else {
+        console.log("Visible");
+      }
+    };
+
+    document.addEventListener(
+      visibilityChangeEventName,
+      onVisibilityChange,
+      false
+    );
+
+    return () => {
+      document.removeEventListener(
+        visibilityChangeEventName,
+        onVisibilityChange
+      );
+    };
+  }, []);
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -93,14 +128,15 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permanent: false,
-      },
-    };
-  }
+  // TODO: Uncomment
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/auth/login",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   const { examId } = context.params;
 
