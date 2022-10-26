@@ -96,6 +96,10 @@ const examSlice = createSlice({
     clearAssignedExams: (state: ExamStore) => {
       state.assignedExams = [];
     },
+
+    increaseTabChangeCount: (state: ExamStore) => {
+      state.activeExam.tabChangeCount += 1;
+    },
   },
 });
 

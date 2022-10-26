@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
 import ExamCamera from "../../components/exam/exam-camera";
@@ -18,6 +18,7 @@ import {
   getVisibilityEventNames,
   usePageVisibility,
 } from "../../helpers/app/visibility-event";
+import WarningModal from "../../components/exam/exam-modals";
 
 // TODO (CHEAT DETECTION):
 //
@@ -37,12 +38,8 @@ import {
 
 // TODO (UI):
 //
-// Make the timer work
-//
 // This screen should be full screen
 // Timer state changes saved every 30 secs
-//
-// Modal Popup for warning
 //
 // Block interactions while loading
 //
@@ -56,6 +53,14 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 
+  const [didLeaveExam, setDidLeaveExam] = useState(false);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalData, setModalData] = useState<{
+    title: string;
+    description: string;
+  }>();
+
   useEffect(() => {
     if (!exam) return;
 
@@ -66,33 +71,56 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     };
   }, [dispatch, exam]);
 
-  // const isVisible = usePageVisibility();
-
   useEffect(() => {
     const hiddenProp = getBrowserDocumentHiddenProp();
     const visibilityChangeEventName = getBrowserVisibilityProp();
 
-    const onVisibilityChange = () => {
+    const handleVisibilityChange = () => {
       if (document[hiddenProp]) {
-        console.log("Hidden");
+        setDidLeaveExam(true);
       } else {
-        console.log("Visible");
+        showModal(
+          "WAARNING!",
+          "Leaving exam multiple times may be flagged as cheating!"
+        );
       }
     };
 
     document.addEventListener(
       visibilityChangeEventName,
-      onVisibilityChange,
+      handleVisibilityChange,
       false
     );
 
     return () => {
       document.removeEventListener(
         visibilityChangeEventName,
-        onVisibilityChange
+        handleVisibilityChange
       );
     };
   }, []);
+
+  const showModal = (title: string, description: string) => {
+    setIsModalVisible(true);
+    setModalData({
+      title,
+      description,
+    });
+  };
+
+  const hideModel = () => {
+    if (!didLeaveExam) {
+      return;
+    }
+
+    setIsModalVisible(false);
+    setModalData({
+      title: "",
+      description: "",
+    });
+
+    dispatch(examActions.increaseTabChangeCount());
+  };
 
   if (error) {
     return <p>Error: {error}</p>;
@@ -114,6 +142,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
         <Grid item xs={9} alignItems="stretch" alignContent="space-between">
           <QuestionWidget />
           <ExamButtonsGroup />
+          <p>Exam Leave Count: {activeExam.tabChangeCount}</p>
         </Grid>
 
         <Grid item xs={3}>
@@ -121,6 +150,13 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
           <ExamCamera />
         </Grid>
       </Grid>
+
+      <WarningModal
+        open={isModalVisible}
+        title={modalData?.title}
+        description={modalData?.description}
+        onClose={hideModel}
+      />
     </React.Fragment>
   );
 };
