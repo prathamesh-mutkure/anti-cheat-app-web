@@ -61,6 +61,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     description: string;
   }>();
 
+  // Load exam into state
   useEffect(() => {
     if (!exam) return;
 
@@ -71,6 +72,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     };
   }, [dispatch, exam]);
 
+  // Prevent refresh
   useEffect(() => {
     const beforeUnloadEventHandler = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -95,6 +97,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     };
   }, []);
 
+  // TODO: Fix back button
   // useEffect(() => {
   //   if (router.asPath === window.location.pathname) {
   //     window.onpopstate = (event: PopStateEvent) => {
@@ -106,6 +109,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   //   return () => {};
   // }, [router]);
 
+  // Tab change
   useEffect(() => {
     const hiddenProp = getBrowserDocumentHiddenProp();
     const visibilityChangeEventName = getBrowserVisibilityProp();
@@ -155,6 +159,11 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     });
 
     dispatch(examActions.increaseTabChangeCount());
+
+    if (activeExam.tabChangeCount > 3) {
+      toast("You've changed tab more than 3 times, submiting exam!");
+      // TODO: submit exam
+    }
   };
 
   if (error) {
@@ -186,12 +195,14 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
         </Grid>
       </Grid>
 
-      <WarningModal
-        open={isModalVisible}
-        title={modalData?.title}
-        description={modalData?.description}
-        onClose={hideModel}
-      />
+      {false && (
+        <WarningModal
+          open={isModalVisible}
+          title={modalData?.title}
+          description={modalData?.description}
+          onClose={hideModel}
+        />
+      )}
     </React.Fragment>
   );
 };

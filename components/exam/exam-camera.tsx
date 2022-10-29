@@ -3,6 +3,7 @@ import { FaceDetection, Results } from "@mediapipe/face_detection";
 import { Button } from "@mui/material";
 import NextImage from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import Webcam from "react-webcam";
 import { b64toBlob } from "../../helpers/face-detection/image-helper";
 import classes from "./exam-camera.module.scss";
@@ -13,6 +14,12 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
   const [img_, setImg_] = useState<string>();
   const webcamRef: React.LegacyRef<Webcam> = useRef();
   const faceDetectionRef = useRef<FaceDetection>(null);
+  const realtimeDetection = true;
+
+  const frameRefresh = 30;
+  let currentFrame = useRef(0);
+
+  const [chetingStatus, setChetingStatus] = useState("");
 
   useEffect(() => {
     const faceDetection: FaceDetection = new FaceDetection({
@@ -28,14 +35,19 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
     function onResult(result: Results) {
       if (result.detections.length < 1) {
+        toast(
+          "Face not detected, make sure your face is visible on the screen!"
+        );
         return;
       } else if (result.detections.length > 1) {
-        // TODO: Multiple people warning
+        toast(
+          "Detected more than one person in frame, can be flagged as cheating!"
+        );
         return;
       }
 
       // result.detections[0].landmarks[i]
-      // i value and landmark
+      // i ---> landmark
       // 0 ---> Left Eye
       // 1 ---> RIght Eye
       // 4 ---> Left Ear
@@ -44,6 +56,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
       const [leftEye, RightEye, , , leftEar, rightEar] =
         result.detections[0].landmarks;
 
+      // Move to print data function
       console.log(`LEFT EAR: ${leftEar.x}`);
       console.log(`LEFT EYE: ${leftEye.x}`);
 
@@ -60,7 +73,13 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
       console.log(`LOOKING LEFT: ${lookingLeft}`);
       console.log(`LOOKING RIGHT: ${lookingRight}`);
 
-      // console.log(result);
+      if (lookingLeft) {
+        setChetingStatus("Cheating Detected: You're looking left");
+      } else if (lookingRight) {
+        setChetingStatus("Cheating Detected: You're looking right");
+      } else {
+        setChetingStatus("Everything okay!");
+      }
     }
 
     faceDetection.onResults(onResult);
@@ -69,9 +88,17 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     if (webcamRef.current) {
       const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
-          // await faceDetection.send({ image: webcamRef.current.video });
-          // TODO: Process after every X frames
-          // 10 times in 1 sec preferably
+          // Proceed frames only if real time detection is on
+          if (!realtimeDetection) {
+            return;
+          }
+
+          currentFrame.current += 1;
+
+          if (currentFrame.current >= frameRefresh) {
+            currentFrame.current = 0;
+            await faceDetection.send({ image: webcamRef.current.video });
+          }
         },
         width: 1280,
         height: 720,
@@ -79,7 +106,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
       camera.start();
     }
-  }, [webcamRef]);
+  }, [webcamRef, realtimeDetection]);
 
   const onResultClick = async () => {
     // const imgSrc = webcamRef.current.getScreenshot();
@@ -101,6 +128,11 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
           screenshotFormat="image/jpeg"
         />
       )}
+
+      <br />
+
+      <p>Cheating status: {chetingStatus}</p>
+
       <Button onClick={onResultClick}>Get Result</Button>
 
       {img_ && <NextImage src={img_} alt="Profile" />}
