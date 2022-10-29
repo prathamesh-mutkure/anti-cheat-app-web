@@ -8,6 +8,11 @@ import Webcam from "react-webcam";
 import { b64toBlob } from "../../helpers/face-detection/image-helper";
 import classes from "./exam-camera.module.scss";
 
+// TODO: Modularise code
+//
+// TODO: Make algo more strict using difference between coordinates
+//
+
 interface ExamCameraProps {}
 
 const ExamCamera: React.FC<ExamCameraProps> = () => {
@@ -16,7 +21,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
   const faceDetectionRef = useRef<FaceDetection>(null);
   const realtimeDetection = true;
 
-  const frameRefresh = 30;
+  const frameRefresh = 1;
   let currentFrame = useRef(0);
 
   const [chetingStatus, setChetingStatus] = useState("");
@@ -65,8 +70,15 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
       console.log(`RIGHT EYE: ${RightEye.x}`);
       console.log(`RIGHT EAR: ${rightEar.x}`);
 
-      const lookingLeft = leftEye.x <= leftEar.x;
-      const lookingRight = RightEye.x >= rightEar.x;
+      const leftCoordDistance = leftEye.x - leftEar.x;
+      const rightCoordDistance = rightEar.x - RightEye.x;
+
+      // const lookingLeft = leftEye.x <= leftEar.x;
+      // const lookingRight = RightEye.x >= rightEar.x;
+
+      // The higher the distance, the difficult it is to cheat
+      const lookingLeft = leftCoordDistance <= 0.03;
+      const lookingRight = rightCoordDistance <= 0.03;
 
       console.log("----------------------");
 
