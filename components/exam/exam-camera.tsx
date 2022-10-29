@@ -5,7 +5,13 @@ import NextImage from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Webcam from "react-webcam";
-import { b64toBlob } from "../../helpers/face-detection/image-helper";
+import {
+  b64toBlob,
+  detectCheating,
+  extractFaceCoordinates,
+  getCheatingStatus,
+  printLandmarks,
+} from "../../helpers/face-detection/face-detection-helper";
 import classes from "./exam-camera.module.scss";
 
 // TODO: Modularise code
@@ -39,6 +45,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     });
 
     function onResult(result: Results) {
+      // TODO: Fix multiple toasts
       if (result.detections.length < 1) {
         toast(
           "Face not detected, make sure your face is visible on the screen!"
@@ -51,47 +58,14 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
         return;
       }
 
-      // result.detections[0].landmarks[i]
-      // i ---> landmark
-      // 0 ---> Left Eye
-      // 1 ---> RIght Eye
-      // 4 ---> Left Ear
-      // 5 ---> Right Ear
+      const faceCoordinates = extractFaceCoordinates(result);
 
-      const [leftEye, RightEye, , , leftEar, rightEar] =
-        result.detections[0].landmarks;
+      printLandmarks(result);
 
-      // Move to print data function
-      console.log(`LEFT EAR: ${leftEar.x}`);
-      console.log(`LEFT EYE: ${leftEye.x}`);
+      const [lookingLeft, lookingRight] = detectCheating(faceCoordinates, true);
 
-      console.log("----------------------");
-
-      console.log(`RIGHT EYE: ${RightEye.x}`);
-      console.log(`RIGHT EAR: ${rightEar.x}`);
-
-      const leftCoordDistance = leftEye.x - leftEar.x;
-      const rightCoordDistance = rightEar.x - RightEye.x;
-
-      // const lookingLeft = leftEye.x <= leftEar.x;
-      // const lookingRight = RightEye.x >= rightEar.x;
-
-      // The higher the distance, the difficult it is to cheat
-      const lookingLeft = leftCoordDistance <= 0.03;
-      const lookingRight = rightCoordDistance <= 0.03;
-
-      console.log("----------------------");
-
-      console.log(`LOOKING LEFT: ${lookingLeft}`);
-      console.log(`LOOKING RIGHT: ${lookingRight}`);
-
-      if (lookingLeft) {
-        setChetingStatus("Cheating Detected: You're looking left");
-      } else if (lookingRight) {
-        setChetingStatus("Cheating Detected: You're looking right");
-      } else {
-        setChetingStatus("Everything okay!");
-      }
+      const cheatingStatus = getCheatingStatus(lookingLeft, lookingRight);
+      setChetingStatus(cheatingStatus);
     }
 
     faceDetection.onResults(onResult);
