@@ -25,6 +25,8 @@ import { useRouter } from "next/router";
 //
 // If change tab more than 3 times, submit exam
 //
+// Disable back button
+//
 // Save answer keys and timer after every answer selection
 // Create new API for it
 //
@@ -33,7 +35,6 @@ import { useRouter } from "next/router";
 // Only within given time period of exam
 //
 // Cannot give exam again after submitting
-
 // TODO (UI):
 //
 // This screen should be full screen

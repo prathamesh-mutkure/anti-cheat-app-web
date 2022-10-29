@@ -27,7 +27,40 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
     });
 
     function onResult(result: Results) {
-      console.log(result);
+      if (result.detections.length < 1) {
+        return;
+      } else if (result.detections.length > 1) {
+        // TODO: Multiple people warning
+        return;
+      }
+
+      // result.detections[0].landmarks[i]
+      // i value and landmark
+      // 0 ---> Left Eye
+      // 1 ---> RIght Eye
+      // 4 ---> Left Ear
+      // 5 ---> Right Ear
+
+      const [leftEye, RightEye, , , leftEar, rightEar] =
+        result.detections[0].landmarks;
+
+      console.log(`LEFT EAR: ${leftEar.x}`);
+      console.log(`LEFT EYE: ${leftEye.x}`);
+
+      console.log("----------------------");
+
+      console.log(`RIGHT EYE: ${RightEye.x}`);
+      console.log(`RIGHT EAR: ${rightEar.x}`);
+
+      const lookingLeft = leftEye.x <= leftEar.x;
+      const lookingRight = RightEye.x >= rightEar.x;
+
+      console.log("----------------------");
+
+      console.log(`LOOKING LEFT: ${lookingLeft}`);
+      console.log(`LOOKING RIGHT: ${lookingRight}`);
+
+      // console.log(result);
     }
 
     faceDetection.onResults(onResult);
@@ -37,6 +70,8 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
       const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
           // await faceDetection.send({ image: webcamRef.current.video });
+          // TODO: Process after every X frames
+          // 10 times in 1 sec preferably
         },
         width: 1280,
         height: 720,
@@ -59,11 +94,13 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
   return (
     <div>
-      {/* <Webcam
-        className={classes.camera}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-      /> */}
+      {true && (
+        <Webcam
+          className={classes.camera}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+        />
+      )}
       <Button onClick={onResultClick}>Get Result</Button>
 
       {img_ && <NextImage src={img_} alt="Profile" />}
