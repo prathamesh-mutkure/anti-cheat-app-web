@@ -28,7 +28,7 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     setLodading(true);
 

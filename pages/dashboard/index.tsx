@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
@@ -13,6 +13,12 @@ interface DashboardPageProps {
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
   const dispatch = useAppDispatch();
+
+  const session = useSession();
+
+  useEffect(() => {
+    console.log(session.data);
+  }, [session]);
 
   useEffect(() => {
     if (!exams) {
@@ -31,6 +37,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
 
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
+
+  console.log(session);
 
   if (!session) {
     return {
