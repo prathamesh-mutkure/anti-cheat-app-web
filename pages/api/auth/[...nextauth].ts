@@ -6,22 +6,20 @@ import { User } from "../../../models/user-models";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60,
+    // maxAge: 60 * 60,
   },
-  callbacks: {
-    session: async (params) => {
-      return params.session;
-    },
-  },
+
   providers: [
     CredentialsProvider({
-      credentials: {
-        id: { type: "text" },
-        password: { type: "text" },
-      },
+      type: "credentials",
+      credentials: {},
       authorize: async (credentials, req) => {
         try {
-          const { id, password } = credentials;
+          const { id, password } = credentials as {
+            id: string;
+            password: string;
+          };
+
           const user: User = await getUser(id, password);
 
           if (user) {
@@ -35,6 +33,28 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
+  pages: {
+    signIn: "/auth/login",
+  },
+
+  callbacks: {
+    session: async ({ session, token }) => {
+      session.user = token.user;
+
+      return session;
+    },
+
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.user = user;
+      }
+
+      return token;
+    },
+  },
+
+  secret: "secret",
 };
 
 export default NextAuth(authOptions);
