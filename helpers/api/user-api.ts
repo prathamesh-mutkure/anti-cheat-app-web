@@ -22,6 +22,7 @@ const getUser = async (id: string, password: string) => {
       id: data?.id,
       fname: data?.fname,
       lname: data?.lname,
+      token: data?.token,
     };
   } catch (e) {
     throw new Error(e.message || "Failed to signin user!");

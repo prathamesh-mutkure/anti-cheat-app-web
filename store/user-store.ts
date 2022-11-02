@@ -8,7 +8,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  user: { id: null, fname: null, lname: null },
+  user: { id: null, fname: null, lname: null, token: null },
   isLoggedIn: false,
 };
 
