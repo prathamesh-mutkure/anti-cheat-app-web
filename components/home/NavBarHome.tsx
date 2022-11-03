@@ -30,10 +30,6 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
 
   const session = useSession();
 
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
+import NavBarHome from "../../components/home/NavBarHome";
 import { getAssignedExams } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
 import { AssignedExam } from "../../models/exam-models";
@@ -30,6 +31,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
 
   return (
     <div>
+      <NavBarHome />
       <Dashboard />
     </div>
   );

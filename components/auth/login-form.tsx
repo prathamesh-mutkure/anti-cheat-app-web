@@ -1,15 +1,39 @@
-import { Button, Grid, TextField } from "@mui/material";
-import { signIn, signOut, useSession } from "next-auth/react";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { MouseEventHandler, useState } from "react";
-import { getUser } from "../../helpers/api/user-api";
+import { useState } from "react";
 import { useAppDispatch } from "../../hooks";
-import { userActions } from "../../store/user-store";
 import classes from "./login-form.module.scss";
 import { toast } from "react-toastify";
+import { Box, Container } from "@mui/system";
+import Link from "next/link";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
+const Copyright = (props: any) => {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="/">
+        Anti-Cheat Exam App
+      </Link>
+      {" - "}
+      {new Date().getFullYear()}
+    </Typography>
+  );
+};
 
 const LoginForm = () => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [formData, setData] = useState({
@@ -28,16 +52,18 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (lodading) {
+      return;
+    }
+
     setLodading(true);
 
     // TODO: form validation
 
     try {
-      // const user = await getUser(id, password);
-      // dispatch(userActions.setUser(user));
-
       const result = await signIn("credentials", {
         redirect: false,
         id: id,
@@ -61,34 +87,76 @@ const LoginForm = () => {
     }
   };
 
-  const handleLogout = () => {
-    signOut({ redirect: false });
-  };
+  const validateInputs = () => {};
 
   return (
-    <div className={classes.form}>
-      <h1>Anti-Cheat Exam App</h1>
+    <>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
 
-      <Grid direction="column" container>
-        <TextField
-          name="id"
-          value={id}
-          label="ID"
-          onChange={handleInputChange}
-          type="text"
-        />
-        <TextField
-          name="password"
-          value={password}
-          label="Password"
-          onChange={handleInputChange}
-          type="password"
-        />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
 
-        <Button onClick={handleSubmit}>Submit</Button>
-        <Button onClick={handleLogout}>Logout</Button>
-      </Grid>
-    </div>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              name="id"
+              id="id"
+              value={id}
+              label="ID"
+              onChange={handleInputChange}
+              type="text"
+              margin="normal"
+              required
+              fullWidth
+              autoFocus
+            />
+
+            <TextField
+              name="password"
+              id="password"
+              value={password}
+              label="Password"
+              onChange={handleInputChange}
+              type="password"
+              margin="normal"
+              required
+              fullWidth
+              autoComplete="current-password"
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
+            >
+              Sign In
+            </Button>
+          </Box>
+        </Box>
+
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </>
   );
 };
 
