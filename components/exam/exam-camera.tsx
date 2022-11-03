@@ -14,11 +14,6 @@ import {
 } from "../../helpers/face-detection/face-detection-helper";
 import classes from "./exam-camera.module.scss";
 
-// TODO: Modularise code
-//
-// TODO: Make algo more strict using difference between coordinates
-//
-
 interface ExamCameraProps {}
 
 const ExamCamera: React.FC<ExamCameraProps> = () => {

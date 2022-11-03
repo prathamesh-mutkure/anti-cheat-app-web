@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import NavBarHome from "../components/home/NavBarHome";
 
 interface HomePageProps {}
 
@@ -10,16 +11,10 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
   };
 
   return (
-    <div>
+    <>
+      <NavBarHome />
       <h1>Anti-Cheat Exam App</h1>
-      <h3>Landing Page</h3>
-
-      <Link href="/auth/login">
-        <Button>Login</Button>
-      </Link>
-
-      <Button onClick={handleLogout}>Logout</Button>
-    </div>
+    </>
   );
 };
 

@@ -36,7 +36,6 @@ const QuestionCircle: React.FC<QuestionCircleProps> = ({
 const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
   // TODO:
   // Labels for colors of circles
-  // Save answes using onChange of <Radio>
 
   // TODO: Maybe move highlight logic to circle component
 
