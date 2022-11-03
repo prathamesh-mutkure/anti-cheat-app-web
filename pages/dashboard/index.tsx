@@ -54,7 +54,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const assignedExams: AssignedExam[] = await getAssignedExams(
-      "1800760308",
+      session.user.id,
       session.user.token
     );
 

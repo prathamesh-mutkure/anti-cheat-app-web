@@ -29,7 +29,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
 
     try {
       const result = await submitExam(
-        "1800760308",
+        session.data?.user.id,
         activeExam.exam._id,
         activeExam.answerKeys,
         session.data?.user.token
