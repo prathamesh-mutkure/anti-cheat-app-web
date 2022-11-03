@@ -8,6 +8,9 @@ import {
 import Link from "next/link";
 import { AssignedExam } from "../../models/exam-models";
 import styles from "./exam-card.module.scss";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 
 interface ExamCardProps {
   exam: AssignedExam;

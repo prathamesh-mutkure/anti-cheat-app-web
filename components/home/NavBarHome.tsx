@@ -35,6 +35,7 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   };
 
   const handleLogout = () => {
+    // TODO: Redirect to Home
     signOut({ redirect: false });
   };
 
