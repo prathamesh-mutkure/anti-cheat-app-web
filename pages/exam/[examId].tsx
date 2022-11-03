@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
@@ -210,20 +210,28 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
 
-  // TODO: Uncomment
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/auth/login",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  // TODO: Pass query "redirect_to", and use that for redirection
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
 
   const { examId } = context.params;
 
   try {
-    const exam = await getExam(examId.toString());
+    const exam = await getExam(
+      session.user.id,
+      examId.toString(),
+      session.user.token
+    );
+
+    if (!exam) {
+      throw new Error("Failed to get exam!");
+    }
 
     return {
       props: {
@@ -232,12 +240,10 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
-    // TODO: Return error message in error prop
-    // For all getServerSideProp checks
     return {
       props: {
         exam: null,
-        error: "Failed to get exam!",
+        error: e.message ?? "Failed to get exam!",
       },
     };
   }

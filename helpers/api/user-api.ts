@@ -32,7 +32,8 @@ const getUser = async (id: string, password: string) => {
 const submitExam = async (
   studentId: string,
   examId: string,
-  answers: string[]
+  answers: string[],
+  token: string
 ) => {
   try {
     const res = await fetch(`${BASE_URL}/submitExam/${studentId}`, {
@@ -41,6 +42,7 @@ const submitExam = async (
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 

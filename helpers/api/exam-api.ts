@@ -1,8 +1,12 @@
 import { BASE_URL } from "../../constants";
 
-const getExam = async (examId: string) => {
+const getExam = async (studentId: string, examId: string, token: string) => {
   try {
-    const res = await fetch(`${BASE_URL}/exam/${examId}`);
+    const res = await fetch(`${BASE_URL}/${studentId}/exam/${examId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
 

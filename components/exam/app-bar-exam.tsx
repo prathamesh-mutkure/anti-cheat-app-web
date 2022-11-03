@@ -7,6 +7,7 @@ import { submitExam } from "../../helpers/api/user-api";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 // TODO:
 //
@@ -18,6 +19,7 @@ interface AppBarExamProps {
 }
 
 const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
+  const session = useSession();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +31,8 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
       const result = await submitExam(
         "1800760308",
         activeExam.exam._id,
-        activeExam.answerKeys
+        activeExam.answerKeys,
+        session.data?.user.token
       );
 
       router.replace("/dashboard");

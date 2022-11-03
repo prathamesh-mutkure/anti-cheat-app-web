@@ -60,9 +60,12 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
       const faceCoordinates = extractFaceCoordinates(result);
 
-      printLandmarks(result);
+      // printLandmarks(result);
 
-      const [lookingLeft, lookingRight] = detectCheating(faceCoordinates, true);
+      const [lookingLeft, lookingRight] = detectCheating(
+        faceCoordinates,
+        false
+      );
 
       const cheatingStatus = getCheatingStatus(lookingLeft, lookingRight);
       setChetingStatus(cheatingStatus);
