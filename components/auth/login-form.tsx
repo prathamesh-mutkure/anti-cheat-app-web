@@ -41,27 +41,49 @@ const LoginForm = () => {
     password: "12345678",
   });
 
-  const { id, password } = formData;
+  const [errors, setErrors] = useState({
+    idError: "",
+    passwordError: "",
+  });
 
-  const [lodading, setLodading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const { id, password } = formData;
+  const { idError, passwordError } = errors;
 
   const handleInputChange = (e: any) => {
-    setData({
+    const newData = {
       ...formData,
       [e.target.name]: e.target.value,
+    };
+
+    setData(newData);
+    validateInputs(newData.id, newData.password);
+  };
+
+  const validateInputs = (id: string, password: string) => {
+    const idRegex = /^\d{10}$/;
+    const passwordRegex = /^.{8,}$/;
+
+    const isIdValid = idRegex.test(id);
+    const isPasswordValid = passwordRegex.test(password);
+
+    setErrors({
+      idError: isIdValid ? "" : "ID must be a 10 digit number",
+      passwordError: isPasswordValid
+        ? ""
+        : "Password must be atleast 8 character long",
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (lodading) {
+    if (loading || idError !== "" || passwordError != "") {
       return;
     }
 
-    setLodading(true);
-
-    // TODO: form validation
+    setLoading(true);
 
     try {
       const result = await signIn("credentials", {
@@ -78,16 +100,15 @@ const LoginForm = () => {
         router.replace("/dashboard");
       }
     } catch (e) {
+      // TODO: Fix login toast error message
+
       console.log(e);
       toast(e.message || "Login failed, please try again!");
-
-      // TODO: Fix login error message
+      setLoading(false);
     } finally {
-      setLodading(false);
+      // setLoading(false);
     }
   };
-
-  const validateInputs = () => {};
 
   return (
     <>
@@ -103,6 +124,7 @@ const LoginForm = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            {/* TODO: Add App Logo Here */}
             <LockOutlinedIcon />
           </Avatar>
 
@@ -127,6 +149,8 @@ const LoginForm = () => {
               required
               fullWidth
               autoFocus
+              error={idError != ""}
+              helperText={idError}
             />
 
             <TextField
@@ -140,6 +164,8 @@ const LoginForm = () => {
               required
               fullWidth
               autoComplete="current-password"
+              error={passwordError != ""}
+              helperText={passwordError}
             />
 
             <Button
@@ -148,6 +174,7 @@ const LoginForm = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
+              disabled={loading || idError != "" || passwordError != ""}
             >
               Sign In
             </Button>
