@@ -14,12 +14,7 @@ interface DashboardPageProps {
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
   const dispatch = useAppDispatch();
-
   const session = useSession();
-
-  useEffect(() => {
-    console.log(session.data);
-  }, [session]);
 
   useEffect(() => {
     if (!exams) {
@@ -57,6 +52,10 @@ const getServerSideProps: GetServerSideProps = async (context) => {
       session.user.id,
       session.user.token
     );
+
+    if (!assignedExams) {
+      throw new Error("Error getting assigned exams!");
+    }
 
     return {
       props: {

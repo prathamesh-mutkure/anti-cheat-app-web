@@ -195,6 +195,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
         </Grid>
       </Grid>
 
+      {/* Disabled for testing */}
       {false && (
         <WarningModal
           open={isModalVisible}

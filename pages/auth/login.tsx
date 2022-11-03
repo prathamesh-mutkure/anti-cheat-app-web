@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next";
-import { getSession, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { getSession } from "next-auth/react";
 import LoginForm from "../../components/auth/login-form";
 
 const LoginPage = () => {
