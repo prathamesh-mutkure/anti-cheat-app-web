@@ -1,6 +1,4 @@
 import { Container, Grid } from "@mui/material";
-import { GetServerSideProps } from "next";
-import { getAssignedExams } from "../../helpers/api/exam-api";
 import { useAppSelector } from "../../hooks";
 import ExamCard from "./exam-card";
 

@@ -9,9 +9,10 @@ import { examActions } from "../../store/exam-store";
 
 interface DashboardPageProps {
   exams: AssignedExam[];
+  error: string;
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
+const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
   const dispatch = useAppDispatch();
 
   const session = useSession();
@@ -28,6 +29,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
     dispatch(examActions.setAssignedExams(exams));
   }, [dispatch, exams]);
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <div>
       <Dashboard />
@@ -38,8 +43,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams }) => {
 const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
 
-  console.log(session);
-
   if (!session) {
     return {
       redirect: {
@@ -49,15 +52,26 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  // TODO: Pass user and token here
-  // Handle any potential error
-  const assignedExams: AssignedExam[] = await getAssignedExams("1800760308");
+  try {
+    const assignedExams: AssignedExam[] = await getAssignedExams(
+      "1800760308",
+      session.user.token
+    );
 
-  return {
-    props: {
-      exams: assignedExams,
-    },
-  };
+    return {
+      props: {
+        exams: assignedExams,
+        error: null,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        exams: null,
+        error: e.message ?? "Error getting assigned exams!",
+      },
+    };
+  }
 };
 
 export default DashboardPage;

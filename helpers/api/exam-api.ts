@@ -16,9 +16,15 @@ const getExam = async (examId: string) => {
   }
 };
 
-const getAssignedExams = async (userId: string) => {
+const getAssignedExams = async (userId: string, token: string) => {
+  // TODO: handle res.json() error when response not in json
+
   try {
-    const res = await fetch(`${BASE_URL}/${userId}/assignedExams/all`);
+    const res = await fetch(`${BASE_URL}/${userId}/assignedExams/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
 
