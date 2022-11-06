@@ -58,7 +58,12 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
 
   return (
     <div>
-      <Card>
+      <Card
+        sx={{
+          boxShadow: "none",
+          outline: "solid #eeeeee 2px",
+        }}
+      >
         <CardContent>
           <Typography
             sx={{ fontSize: 14, marginBottom: "12px" }}
