@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Grid,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
@@ -24,6 +25,13 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {exam?.name}
           </Typography>
+
+          <Grid container direction="row">
+            <Grid item>
+              <DateRangeIcon />
+            </Grid>
+            <Grid item>{}</Grid>
+          </Grid>
         </CardContent>
         <CardActions>
           <Link href={`/exam/${exam._id}`}>
