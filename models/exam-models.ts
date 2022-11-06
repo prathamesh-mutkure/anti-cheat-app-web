@@ -18,7 +18,7 @@ export interface AssignedExam {
   questionCount: number;
   name: string;
   startDate: string;
-  endData: string;
+  endDate: string;
   duration: number;
   status: string;
 }
