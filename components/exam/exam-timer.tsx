@@ -13,7 +13,7 @@ const ExamTimer: React.FC<ExamTimerProps> = ({ onTimerEnd }) => {
   const examExpiryDate = new Date();
   examExpiryDate.setSeconds(activeExam.expiresOn);
 
-  const { minutes, seconds } = useTimer({
+  const { hours, minutes, seconds } = useTimer({
     expiryTimestamp: examExpiryDate,
     onExpire: onTimerEnd,
   });

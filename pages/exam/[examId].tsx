@@ -201,7 +201,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
             </Grid>
             <Grid item>
               <ExamButtonsGroup />
-              <p>Exam Leave Count: {activeExam.tabChangeCount}</p>
+              {/* <p>Exam Leave Count: {activeExam.tabChangeCount}</p> */}
             </Grid>
           </Grid>
         </Grid>

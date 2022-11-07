@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import React from "react";
 import { useAppDispatch } from "../../hooks";
 import { examActions } from "../../store/exam-store";
@@ -21,6 +21,7 @@ const ExamButton: React.FC<ExamButtonProps> = ({ label, onTap, color }) => {
           color: "white",
         }}
         onClick={onTap}
+        variant="contained"
       >
         {label}
       </Button>
@@ -40,12 +41,12 @@ const ExamButtonsGroup: React.FC<ExamButtonsGroupProps> = () => {
   };
 
   return (
-    <React.Fragment>
-      <Grid container>
+    <div className={classes.examButtonGroup}>
+      <Stack direction="row" spacing={2} justifyContent="center">
         <ExamButton label="Previous" onTap={onPreviousClicked} color="grey" />
         <ExamButton label="Next" onTap={onNextClicked} color="purple" />
-      </Grid>
-    </React.Fragment>
+      </Stack>
+    </div>
   );
 };
 

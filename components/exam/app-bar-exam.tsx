@@ -1,5 +1,4 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import ArrowBack from "@mui/icons-material/ArrowBack";
 import ExamTimer from "./exam-timer";
 import classes from "./app-bar-exam.module.scss";
 import { useAppSelector } from "../../hooks";
@@ -48,15 +47,6 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <ArrowBack />
-          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {examName}
           </Typography>
@@ -64,13 +54,15 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
           <ExamTimer onTimerEnd={onEndExam} />
 
           <Button
-            color="inherit"
+            variant="contained"
+            color="warning"
             sx={{
-              backgroundColor: "red",
               opacity: isLoading ? 0.8 : 1,
+              ml: 3,
             }}
             onClick={onEndExam}
             disabled={isLoading}
+            disableElevation
           >
             End Exam
           </Button>
