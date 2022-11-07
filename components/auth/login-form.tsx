@@ -13,6 +13,7 @@ import classes from "./login-form.module.scss";
 import { toast } from "react-toastify";
 import { Box, Container } from "@mui/system";
 import Link from "next/link";
+import Image from "next/image";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const Copyright = (props: any) => {
@@ -121,15 +122,28 @@ const LoginForm = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            border: "solid rgba(0, 0, 0, 0.23) 1px",
+            borderRadius: "0.4rem",
+            padding: "3rem",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            {/* TODO: Add App Logo Here */}
-            <LockOutlinedIcon />
+          <Avatar
+            sx={{
+              height: "5rem",
+              width: "5rem",
+              mb: 3,
+            }}
+          >
+            <Image
+              src="/images/logo.png"
+              height="128px"
+              width="128px"
+              alt="Logo"
+            />
           </Avatar>
 
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
+            Anti-Cheat Exam App
           </Typography>
 
           <Box

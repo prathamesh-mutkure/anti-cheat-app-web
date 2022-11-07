@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import classes from "./navbar-home.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface NavBarHomeProps {
   window?: () => Window;
@@ -74,7 +75,15 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
             <MenuIcon />
           </IconButton>
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Image
+            src="/images/logo.png"
+            height="48px"
+            width="48px"
+            alt="Logo"
+            className={classes.navLogo}
+          />
+
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
             Anti-Cheat Exam App
           </Typography>
 
