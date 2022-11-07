@@ -4,6 +4,7 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -40,29 +41,38 @@ const QuestionWidget: React.FC<QuestionWidgetProp> = () => {
   };
 
   return (
-    <React.Fragment>
-      <p>{`${currentQuestion + 1}. ${question.title}`}</p>
+    <div className={classes.questionWidget}>
+      <Typography
+        className={classes.question}
+        sx={{
+          marginBottom: "2rem",
+        }}
+      >
+        {`${currentQuestion + 1}. ${question.title}`}
+      </Typography>
 
-      <FormControl>
-        <RadioGroup
-          value={answerKeys[currentQuestion]}
-          onChange={onAnswerChange}
-        >
-          {Object.entries(question.options).map(
-            ([option, label]: [string, string]) => {
-              return (
-                <FormControlLabel
-                  key={option}
-                  value={option}
-                  control={<Radio />}
-                  label={label}
-                />
-              );
-            }
-          )}
-        </RadioGroup>
-      </FormControl>
-    </React.Fragment>
+      <div className={classes.optionsGroup}>
+        <FormControl>
+          <RadioGroup
+            value={answerKeys[currentQuestion]}
+            onChange={onAnswerChange}
+          >
+            {Object.entries(question.options).map(
+              ([option, label]: [string, string]) => {
+                return (
+                  <FormControlLabel
+                    key={option}
+                    value={option}
+                    control={<Radio />}
+                    label={label}
+                  />
+                );
+              }
+            )}
+          </RadioGroup>
+        </FormControl>
+      </div>
+    </div>
   );
 };
 
