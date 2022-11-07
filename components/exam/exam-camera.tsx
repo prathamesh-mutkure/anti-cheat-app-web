@@ -104,7 +104,9 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
   };
 
   return (
-    <div>
+    <div className={classes.cameraContainer}>
+      <p className={classes.cheatingStatus}>Cheating status: {chetingStatus}</p>
+
       {true && (
         <Webcam
           className={classes.camera}
@@ -115,9 +117,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
       <br />
 
-      <p>Cheating status: {chetingStatus}</p>
-
-      <Button onClick={onResultClick}>Get Result</Button>
+      {/* <Button onClick={onResultClick}>Get Result</Button> */}
 
       {img_ && <NextImage src={img_} alt="Profile" />}
     </div>
