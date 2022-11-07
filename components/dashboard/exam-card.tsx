@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   Grid,
   List,
   ListItem,
@@ -18,35 +19,13 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import moment, { monthsShort } from "moment";
+import { Stack } from "@mui/system";
+
+// TODO: Disable button for past or future exam
 
 interface ExamCardProps {
   exam: AssignedExam;
 }
-
-interface ExamCardRowProps {
-  children: React.ReactNode;
-}
-
-const ExamCardRow: React.FC<ExamCardRowProps> = ({ children }) => {
-  return (
-    <Grid item>
-      <Grid
-        container
-        direction="row"
-        alignContent="center"
-        alignItems="center"
-        spacing={2}
-      >
-        <Grid item sx={{ backgroundColor: "cyan", padding: 0 }}>
-          {children[0]}
-        </Grid>
-        <Grid item sx={{ backgroundColor: "lime", padding: 0 }}>
-          {children[1]}
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
 
 const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
   const startDate = new Date(exam.startDate);
@@ -65,13 +44,25 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
         }}
       >
         <CardContent>
-          <Typography
-            sx={{ fontSize: 14, marginBottom: "12px" }}
-            color="text.secondary"
-            gutterBottom
-          >
-            {exam?.name}
-          </Typography>
+          <Stack direction="row" justifyContent="space-between">
+            <Typography
+              sx={{ fontSize: 14, marginBottom: "12px" }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {exam?.name}
+            </Typography>
+
+            <Typography
+              sx={{ fontSize: 14, marginBottom: "12px" }}
+              color="text.secondary"
+              gutterBottom
+            >
+              ID: {exam?._id}
+            </Typography>
+          </Stack>
+
+          <Divider />
 
           <List>
             <ListItem>
@@ -114,7 +105,17 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
         </CardContent>
         <CardActions>
           <Link href={`/exam/${exam._id}`}>
-            <Button size="small">Start Exam</Button>
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              sx={{
+                ml: 2,
+                mb: 1,
+              }}
+            >
+              Start Exam
+            </Button>
           </Link>
         </CardActions>
       </Card>
