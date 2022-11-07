@@ -20,6 +20,7 @@ import {
 } from "../../helpers/app/visibility-event";
 import WarningModal from "../../components/exam/exam-modals";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 // TODO (CHEAT DETECTION):
 //
@@ -180,6 +181,10 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
 
   return (
     <React.Fragment>
+      <Head>
+        <title>{exam.name}</title>
+      </Head>
+
       <AppBarExam examName={activeExam.exam.name} />
 
       <Grid

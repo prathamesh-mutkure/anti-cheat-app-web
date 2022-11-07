@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
+import Head from "next/head";
 import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
 import NavBarHome from "../../components/home/NavBarHome";
@@ -31,6 +32,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
 
   return (
     <div>
+      <Head>
+        <title>Anti-Cheat Exam App Dashboard</title>
+      </Head>
       <NavBarHome />
       <Dashboard />
     </div>
