@@ -182,16 +182,44 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
     <React.Fragment>
       <AppBarExam examName={activeExam.exam.name} />
 
-      <Grid container>
-        <Grid item xs={9} alignItems="stretch" alignContent="space-between">
-          <QuestionWidget />
-          <ExamButtonsGroup />
-          <p>Exam Leave Count: {activeExam.tabChangeCount}</p>
+      <Grid
+        container
+        direction="row"
+        sx={{
+          height: "calc(100% - 4rem)",
+        }}
+      >
+        <Grid item xs={9}>
+          <Grid
+            container
+            direction="column"
+            height="100%"
+            justifyContent="space-between"
+          >
+            <Grid item>
+              <QuestionWidget />
+            </Grid>
+            <Grid item>
+              <ExamButtonsGroup />
+              <p>Exam Leave Count: {activeExam.tabChangeCount}</p>
+            </Grid>
+          </Grid>
         </Grid>
 
         <Grid item xs={3}>
-          <QuestionTracker />
-          <ExamCamera />
+          <Grid
+            container
+            direction="column"
+            height="100%"
+            justifyContent="space-between"
+          >
+            <Grid item>
+              <QuestionTracker />
+            </Grid>
+            <Grid item>
+              <ExamCamera />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
 
