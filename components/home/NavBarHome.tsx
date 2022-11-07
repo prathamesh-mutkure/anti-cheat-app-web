@@ -75,13 +75,15 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
             <MenuIcon />
           </IconButton>
 
-          <Image
-            src="/images/logo.png"
-            height="48px"
-            width="48px"
-            alt="Logo"
-            className={classes.navLogo}
-          />
+          <Link href="/">
+            <Image
+              src="/images/logo.png"
+              height="48px"
+              width="48px"
+              alt="Logo"
+              className={classes.navLogo}
+            />
+          </Link>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
             Anti-Cheat Exam App
@@ -105,7 +107,13 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
             )}
 
             {session.status === "authenticated" && (
-              <Button sx={{ color: "#fff" }} onClick={handleLogout}>
+              <Button
+                // variant="contained"
+                // size="small"
+                // color="warning"
+                onClick={handleLogout}
+                sx={{ color: "#fff" }}
+              >
                 Logout
               </Button>
             )}
