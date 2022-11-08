@@ -90,6 +90,10 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
 
       camera.start();
     }
+
+    return () => {
+      faceDetection.close();
+    };
   }, [webcamRef, realtimeDetection]);
 
   const onResultClick = async () => {
