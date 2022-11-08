@@ -3,7 +3,7 @@ import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useEffect } from "react";
 import Dashboard from "../../components/dashboard/dashboard";
-import NavBarHome from "../../components/home/NavBarHome";
+import NavBarDashboard from "../../components/dashboard/navbar-dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
 import { useAppDispatch } from "../../hooks";
 import { AssignedExam } from "../../models/exam-models";
@@ -35,7 +35,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
       <Head>
         <title>Anti-Cheat Exam App Dashboard</title>
       </Head>
-      <NavBarHome />
+      <NavBarDashboard />
       <Dashboard />
     </div>
   );
