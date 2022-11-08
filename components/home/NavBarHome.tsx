@@ -63,7 +63,12 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
 
   return (
     <React.Fragment>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          position: "absolute",
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
