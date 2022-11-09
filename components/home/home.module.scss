@@ -6,4 +6,38 @@
   background-size: 100% 80%;
   min-height: 100%;
   padding-top: 6rem;
+
+  .heroText {
+    max-width: 50%;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: black;
+    margin: 2rem auto;
+  }
+
+  p {
+    color: #777;
+    margin: 2rem auto;
+  }
+
+  .buttonGroup {
+    padding: 1rem 0;
+  }
+
+  button {
+    margin-right: 1rem;
+  }
+
+  .phone {
+    width: 300px;
+    height: auto;
+    margin-top: 5rem;
+
+    img {
+      max-width: 100%;
+    }
+  }
 }
