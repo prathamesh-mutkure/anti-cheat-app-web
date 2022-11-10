@@ -6,10 +6,15 @@ import { Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import LoginIcon from "@mui/icons-material/Login";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface HeroProps {}
 
 const Hero: React.FC<HeroProps> = () => {
+  const session = useSession();
+
   return (
     <React.Fragment>
       <section className={classes.heroSection}>
@@ -27,23 +32,53 @@ const Hero: React.FC<HeroProps> = () => {
               <p>AI-enabled cheating detection</p>
 
               <Stack direction="row" className={classes.buttonGroup}>
-                <Button
-                  startIcon={<GitHubIcon />}
-                  variant="contained"
-                  size="large"
-                  color="primary"
+                <Link
+                  href="https://github.com/prathamesh-mutkure/anti-cheat-exam-app"
+                  target="_blank"
                 >
-                  Mobile App
-                </Button>
+                  <Button
+                    startIcon={<GitHubIcon />}
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                  >
+                    Mobile App
+                  </Button>
+                </Link>
 
-                <Button
+                {session.status === "authenticated" ? (
+                  <Link href="/dashboard">
+                    <Button
+                      startIcon={<ArrowOutwardIcon />}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href="/auth/login">
+                    <Button
+                      startIcon={<LoginIcon />}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      disabled={session.status === "loading"}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                )}
+
+                {/* <Button
                   startIcon={<ArrowOutwardIcon />}
                   variant="contained"
                   size="large"
                   color="primary"
                 >
                   Login
-                </Button>
+                </Button> */}
               </Stack>
             </div>
 
