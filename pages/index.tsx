@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import Features from "../components/home/features";
 import Hero from "../components/home/Hero";
 import NavBarHome from "../components/home/NavBarHome";
 
@@ -16,6 +17,8 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
       <NavBarHome />
 
       <Hero />
+
+      <Features />
     </>
   );
 };
