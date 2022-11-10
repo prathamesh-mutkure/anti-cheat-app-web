@@ -1,34 +1,96 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Anti-Cheat Exam App  🌟
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+A Web App that aims to stop cheating in online exams with the power of AI and ML. 
 
-## Learn More
+This is the web version of my [Anti-Cheat Exam App](https://github.com/prathamesh-mutkure/anti-cheat-exam-app) with enhanced features, UI/UX, and performance.
 
-To learn more about Next.js, take a look at the following resources:
+<p align="center">  
+<img src="https://user-images.githubusercontent.com/28570857/178106216-25d91b1c-06cf-42fa-85fc-cf3540868b1f.png"/>  
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Features and Interfaces
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The demo images and screenshots are from the mobile app, I'm currently making some final changes to the web app and will soon update this document with demo images of the web app.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Home Page
+   - Landing Page which lists all the features of the app
+
+2. Dashboard
+   - Shows all the exams assigned to the user
+   - The user can start an exam only at the correct timeslot
+   - Logout through the button in the app bar
+
+3. Exam Page
+   - The user can answer MCQ-based questions
+   - The user can also view their progress
+
+   - ![image](https://user-images.githubusercontent.com/28570857/179022654-f59b6b0c-77d7-48f4-9a55-32813378a696.png)
+
+
+7. AI-powered face motion detector
+   - I've used Google's Mediapipe library to track the motion of the user's face
+   - This app can check if a user is trying to cheat by monitoring the co-ordinates of their face
+   - The face detection is performed on-device without sending anything to the backend
+   - Thus, the Face detection is fast and real-time 
+
+   - ![image](https://user-images.githubusercontent.com/28570857/179022316-45cf8a11-9d5a-411f-b4ce-89d1ea02e478.png)
+
+
+
+## Tech stack
+
+#### Frontend
+- Next.js (React)
+- TypeScript
+
+
+#### Backend
+- Nodejs
+- Express
+- MongoDB
+
+#### Other Tools
+- Google Mediapipe (ML Library)
+
+## Points to remember while testing the app
+
+1. First setup the backend by following the instructions in this [repository](https://github.com/prathamesh-mutkure/anti-cheat-app-backend)
+2. The test username and password are given in the login form
+6. Allow **permissions** for camera and mic when asked
+7. Make sure the `BACKEND_URL` is appended with `/api`
+
+## Instructions
+
+
+1. Clone the project
+   - `https://github.com/prathamesh-mutkure/anti-cheat-app-web.git`
+3. Install all the packages
+   - `npm install`
+5. Create a `.env` file and set the following variables or as shown in the `.env.example` file
+   -  `BACKEND_URL`
+   - `AUTH_SECRET`
+6. Run the app
+   - `npm run dev`
+7. Open `http://localhost:3000` with your browser to see the app
+
+
+## Useful Links
+
+- [Mobile App](https://github.com/prathamesh-mutkure/anti-cheat-exam-app) (Android & iOS)
+- [Backend Repository](https://github.com/prathamesh-mutkure/anti-cheat-app-backend)
+- [Project Thesis](https://drive.google.com/file/d/1fXXXjcE74pIOEwavstTmporuOECc7cUu/view)  (Submitted mobile app as final year project for my diploma)
+
+
+## Need help?
+
+Feel free to contact me on [Twitter](https://twitter.com/Prathamesh_M009/)  or [LinkedIn](https://www.linkedin.com/in/prathamesh-mutkure/), know more about me at [prathamesh.co](https://prathamesh.co)
+
+[![Twitter](https://img.shields.io/badge/Twitter-follow-blue.svg?logo=twitter&logoColor=white)](https://twitter.com/Prathamesh_M009/) [![Instagram](https://img.shields.io/badge/Instagram-follow-purple.svg?logo=instagram&logoColor=white)](https://www.instagram.com/prathamesh_mutkure/) 
