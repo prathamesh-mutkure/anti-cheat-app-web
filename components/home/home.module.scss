@@ -64,3 +64,24 @@
     stroke-width: 2;
   }
 }
+
+.contactSection {
+  background: url(https://demo.bootstraptemple.com/app-landing/img/service-bg.d0e67e81.svg)
+    no-repeat;
+  padding: 5% 0 10%;
+
+  h1 {
+    font-size: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .form {
+    h1 {
+      text-align: center;
+    }
+
+    .formFields > div {
+      padding-bottom: 1rem;
+    }
+  }
+}
