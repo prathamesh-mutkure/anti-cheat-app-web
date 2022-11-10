@@ -3,6 +3,7 @@ import {
   AppBar,
   Box,
   Button,
+  Container,
   Divider,
   Drawer,
   IconButton,
@@ -23,6 +24,27 @@ import Image from "next/image";
 interface NavBarHomeProps {
   window?: () => Window;
 }
+
+interface NavButtonProps {
+  text: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const NavButton: React.FC<NavButtonProps> = ({ text, onClick }) => {
+  return (
+    <Button
+      onClick={onClick}
+      variant="outlined"
+      color="primary"
+      sx={{
+        borderRadius: "2rem",
+        marginLeft: "1rem",
+      }}
+    >
+      {text}
+    </Button>
+  );
+};
 
 const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   const { window } = props;
@@ -64,66 +86,66 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   return (
     <React.Fragment>
       <AppBar
-        position="static"
+        color="transparent"
+        position="sticky"
         sx={{
           position: "absolute",
+          boxShadow: "none",
         }}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
+        <Container>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
 
-          <Link href="/">
-            <Image
-              src="/images/logo.png"
-              height="48px"
-              width="48px"
-              alt="Logo"
-              className={classes.navLogo}
-            />
-          </Link>
-
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
-            Anti-Cheat Exam App
-          </Typography>
-
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Link href="/">
-              <Button sx={{ color: "#fff" }}>Home</Button>
+              <Image
+                src="/images/logo.png"
+                height="48px"
+                width="48px"
+                alt="Logo"
+                className={classes.navLogo}
+              />
             </Link>
 
-            {session.status === "authenticated" && (
-              <Link href="/dashboard">
-                <Button sx={{ color: "#fff" }}>Dashboard</Button>
-              </Link>
-            )}
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, ml: 2 }}
+            >
+              Anti-Cheat Exam App
+            </Typography>
 
-            {session.status === "unauthenticated" && (
-              <Link href="/auth/login">
-                <Button sx={{ color: "#fff" }}>Login</Button>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Link href="/">
+                <NavButton text="Home" />
               </Link>
-            )}
 
-            {session.status === "authenticated" && (
-              <Button
-                // variant="contained"
-                // size="small"
-                // color="warning"
-                onClick={handleLogout}
-                sx={{ color: "#fff" }}
-              >
-                Logout
-              </Button>
-            )}
-          </Box>
-        </Toolbar>
+              {session.status === "authenticated" && (
+                <Link href="/dashboard">
+                  <NavButton text="Dashboard" />
+                </Link>
+              )}
+
+              {session.status === "unauthenticated" && (
+                <Link href="/auth/login">
+                  <NavButton text="Login" />
+                </Link>
+              )}
+
+              {session.status === "authenticated" && (
+                <NavButton text="Logout" onClick={handleLogout} />
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
 
       <Box component="nav">
