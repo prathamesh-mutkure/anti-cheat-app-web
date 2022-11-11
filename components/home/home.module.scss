@@ -1,8 +1,7 @@
 /* HERO */
 
 .heroSection {
-  background: url("https://demo.bootstraptemple.com/app-landing/img/banner-4.86a86274.png")
-    no-repeat;
+  background: url(/images/hero_bg.png) no-repeat;
   background-size: 100% 80%;
   min-height: 100%;
   padding-top: 6rem;
@@ -43,8 +42,7 @@
 }
 
 .featureSection {
-  background: url(https://demo.bootstraptemple.com/app-landing/img/service-bg.d0e67e81.svg)
-    no-repeat;
+  background: url(/images/features.svg) no-repeat;
   padding: 5% 0 10%;
 
   h1 {
@@ -66,8 +64,7 @@
 }
 
 .contactSection {
-  background: url(https://demo.bootstraptemple.com/app-landing/img/service-bg.d0e67e81.svg)
-    no-repeat;
+  background: url(/images/features.svg) no-repeat;
   padding: 5% 0 10%;
 
   h1 {

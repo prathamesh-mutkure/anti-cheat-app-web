@@ -1,16 +1,8 @@
 import React from "react";
-import { useAppSelector } from "../../hooks";
-import { useTimer } from "react-timer-hook";
 import classes from "./home.module.scss";
-import {
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, TextField } from "@mui/material";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 interface ContactProps {}
 
@@ -26,16 +18,24 @@ const Contact: React.FC<ContactProps> = () => {
       <Container>
         <Grid container alignItems="center">
           <Grid item xs={6}>
-            <img
-              src="https://demo.bootstraptemple.com/app-landing/img/objects.e4497cfa.svg"
-              alt="Contact Us"
+            <Image
+              src="/images/contact_img.svg"
+              width="325px"
+              height="287px"
+              alt="Contact Image"
             />
           </Grid>
           <Grid item xs={6} className={classes.form}>
             <h1>Contact Us</h1>
             <div className={classes.formFields}>
               <TextField name="name" id="name" label="Name" fullWidth />
-              <TextField name="email" id="email" label="Email" fullWidth />
+              <TextField
+                name="email"
+                id="email"
+                label="Email"
+                fullWidth
+                type="email"
+              />
               <TextField
                 multiline
                 name="message"

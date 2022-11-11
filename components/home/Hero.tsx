@@ -83,11 +83,11 @@ const Hero: React.FC<HeroProps> = () => {
             </div>
 
             <div className={classes.phone}>
-              <img
-                src="https://demo.bootstraptemple.com/app-landing/img/device-mockups/iPhoneX/portrait.9c7ba108.png"
-                alt="Phone"
-                // width={500}
-                // height={1000}
+              <Image
+                src="/images/hero_img.png"
+                width="300px"
+                height="600px"
+                alt="Hero Image"
               />
             </div>
           </Stack>
