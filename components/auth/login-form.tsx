@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../hooks";
 import classes from "./login-form.module.scss";
 import { toast } from "react-toastify";
@@ -15,6 +15,7 @@ import { Box, Container } from "@mui/system";
 import Link from "next/link";
 import Image from "next/image";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Footer from "../home/footer";
 
 const Copyright = (props: any) => {
   return (
@@ -112,92 +113,97 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={classes.formContainer}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            border: "solid rgba(0, 0, 0, 0.23) 1px",
-            borderRadius: "0.4rem",
-            padding: "3rem",
-          }}
-        >
-          <Avatar
-            sx={{
-              height: "5rem",
-              width: "5rem",
-              mb: 3,
-            }}
-          >
-            <Image
-              src="/images/logo.png"
-              height="128px"
-              width="128px"
-              alt="Logo"
-            />
-          </Avatar>
-
-          <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
-            Anti-Cheat Exam App
-          </Typography>
+    <React.Fragment>
+      <div className={classes.formContainer}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
 
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              border: "solid rgba(0, 0, 0, 0.23) 1px",
+              borderRadius: "0.4rem",
+              padding: "3rem",
+            }}
           >
-            <TextField
-              name="id"
-              id="id"
-              value={id}
-              label="ID"
-              onChange={handleInputChange}
-              type="text"
-              margin="normal"
-              required
-              fullWidth
-              autoFocus
-              error={idError != ""}
-              helperText={idError}
-            />
-
-            <TextField
-              name="password"
-              id="password"
-              value={password}
-              label="Password"
-              onChange={handleInputChange}
-              type="password"
-              margin="normal"
-              required
-              fullWidth
-              autoComplete="current-password"
-              error={passwordError != ""}
-              helperText={passwordError}
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
-              disabled={loading || idError != "" || passwordError != ""}
+            <Avatar
+              sx={{
+                height: "5rem",
+                width: "5rem",
+                mb: 3,
+              }}
             >
-              Sign In
-            </Button>
-          </Box>
-        </Box>
+              <Image
+                src="/images/logo.png"
+                height="128px"
+                width="128px"
+                alt="Logo"
+              />
+            </Avatar>
 
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </div>
+            <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
+              Anti-Cheat Exam App
+            </Typography>
+
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                name="id"
+                id="id"
+                value={id}
+                label="ID"
+                onChange={handleInputChange}
+                type="text"
+                margin="normal"
+                required
+                fullWidth
+                autoFocus
+                error={idError != ""}
+                helperText={idError}
+              />
+
+              <TextField
+                name="password"
+                id="password"
+                value={password}
+                label="Password"
+                onChange={handleInputChange}
+                type="password"
+                margin="normal"
+                required
+                fullWidth
+                autoComplete="current-password"
+                error={passwordError != ""}
+                helperText={passwordError}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleSubmit}
+                disabled={loading || idError != "" || passwordError != ""}
+              >
+                Sign In
+              </Button>
+            </Box>
+          </Box>
+
+          {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+        </Container>
+      </div>
+      {/* <div className={classes.footerContainer}>
+        <Footer />
+      </div> */}
+    </React.Fragment>
   );
 };
 

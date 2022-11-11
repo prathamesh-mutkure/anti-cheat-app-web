@@ -3,6 +3,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Contact from "../components/home/contact";
 import Features from "../components/home/features";
+import Footer from "../components/home/footer";
 import Hero from "../components/home/Hero";
 import NavBarHome from "../components/home/NavBarHome";
 
@@ -19,6 +20,7 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
       <Hero />
       <Features />
       <Contact />
+      <Footer />
     </>
   );
 };

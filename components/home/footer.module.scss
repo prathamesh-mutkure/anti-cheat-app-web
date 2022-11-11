@@ -1,0 +1,30 @@
+.footer {
+  background-color: #3f51b5;
+  padding: 3rem 0 1rem;
+  color: white;
+  border-radius: 1.5rem 1.5rem 0 0;
+
+  .items {
+    margin-bottom: 3rem;
+  }
+
+  h3 {
+    cursor: pointer;
+
+    &:hover {
+      //   transform: scale(1.3);
+      transition: ease 200ms;
+      text-decoration: underline;
+    }
+  }
+
+  .copyright {
+    text-align: center;
+
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

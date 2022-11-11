@@ -1,8 +1,15 @@
 .formContainer {
-  margin: 10% 0;
+  margin: 10rem 0 0;
 }
 
 .form {
   max-width: 400px;
   margin: auto auto;
+}
+
+.footerContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
