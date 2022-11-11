@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  JSXElementConstructor,
+  ReactElement,
+  useEffect,
+  useState,
+} from "react";
 import {
   AppBar,
   Box,
   Button,
   Container,
+  CssBaseline,
   Divider,
   Drawer,
   IconButton,
@@ -13,6 +19,7 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  useScrollTrigger,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -29,6 +36,27 @@ interface NavButtonProps {
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+interface ElevationScrollProps {
+  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  window?: () => Window;
+}
+
+const ElevationScroll: React.FC<ElevationScrollProps> = ({
+  children,
+  window,
+}) => {
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+    color: trigger ? "default" : "transparent",
+  });
+};
 
 const NavButton: React.FC<NavButtonProps> = ({ text, onClick }) => {
   return (
@@ -85,68 +113,73 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
 
   return (
     <React.Fragment>
-      <AppBar
-        color="transparent"
-        position="sticky"
-        sx={{
-          position: "absolute",
-          boxShadow: "none",
-        }}
-      >
-        <Container>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
+      <CssBaseline />
 
-            <Link href="/">
-              <Image
-                src="/images/logo.png"
-                height="48px"
-                width="48px"
-                alt="Logo"
-                className={classes.navLogo}
-              />
-            </Link>
+      <ElevationScroll>
+        <AppBar
+          sx={
+            {
+              // boxShadow: "none",
+            }
+          }
+        >
+          <Container>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
 
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, ml: 2 }}
-            >
-              Anti-Cheat Exam App
-            </Typography>
-
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Link href="/">
-                <NavButton text="Home" />
+                <Image
+                  src="/images/logo.png"
+                  height="48px"
+                  width="48px"
+                  alt="Logo"
+                  className={classes.navLogo}
+                />
               </Link>
 
-              {session.status === "authenticated" && (
-                <Link href="/dashboard">
-                  <NavButton text="Dashboard" />
-                </Link>
-              )}
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, ml: 2 }}
+              >
+                Anti-Cheat Exam App
+              </Typography>
 
-              {session.status === "unauthenticated" && (
-                <Link href="/auth/login">
-                  <NavButton text="Login" />
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                <Link href="/">
+                  <NavButton text="Home" />
                 </Link>
-              )}
 
-              {session.status === "authenticated" && (
-                <NavButton text="Logout" onClick={handleLogout} />
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+                {session.status === "authenticated" && (
+                  <Link href="/dashboard">
+                    <NavButton text="Dashboard" />
+                  </Link>
+                )}
+
+                {session.status === "unauthenticated" && (
+                  <Link href="/auth/login">
+                    <NavButton text="Login" />
+                  </Link>
+                )}
+
+                {session.status === "authenticated" && (
+                  <NavButton text="Logout" onClick={handleLogout} />
+                )}
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ElevationScroll>
+
+      {/* <Toolbar /> */}
 
       <Box component="nav">
         <Drawer
