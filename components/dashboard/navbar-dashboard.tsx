@@ -19,15 +19,18 @@ import classes from "./navbar-dashboard.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface NavBarDashboardProps {
   window?: () => Window;
 }
 
+const drawerWidth = 240;
+
 const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const drawerWidth = 240;
+  const router = useRouter();
 
   const session = useSession();
 
@@ -36,8 +39,8 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
   };
 
   const handleLogout = () => {
-    // TODO: Redirect to Home
     signOut({ redirect: false });
+    router.replace("/auth/login");
   };
 
   const drawer = (

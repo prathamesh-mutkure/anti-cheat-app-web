@@ -27,6 +27,7 @@ import classes from "./navbar-home.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface NavBarHomeProps {
   window?: () => Window;
@@ -74,10 +75,12 @@ const NavButton: React.FC<NavButtonProps> = ({ text, onClick }) => {
   );
 };
 
+const drawerWidth = 240;
+
 const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   const { window } = props;
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const drawerWidth = 240;
 
   const session = useSession();
 
@@ -86,8 +89,8 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   };
 
   const handleLogout = () => {
-    // TODO: Redirect to Home
     signOut({ redirect: false });
+    router.replace("/auth/login");
   };
 
   const drawer = (
