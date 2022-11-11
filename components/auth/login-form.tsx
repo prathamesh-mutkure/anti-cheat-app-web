@@ -112,7 +112,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <div className={classes.formContainer}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
 
@@ -197,7 +197,7 @@ const LoginForm = () => {
 
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </>
+    </div>
   );
 };
 
