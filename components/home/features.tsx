@@ -73,6 +73,7 @@ const Features: React.FC<FeaturesProps> = () => {
                     borderRadius: "0.85rem",
                     boxShadow: "0 5px 25px rgb(0 0 0 / 8%)",
                     padding: "1rem",
+                    height: "100%",
                   }}
                 >
                   <CardMedia

@@ -44,11 +44,6 @@ const QuestionCircle: React.FC<QuestionCircleProps> = ({
 };
 
 const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
-  // TODO:
-  // Labels for colors of circles
-
-  // TODO: Maybe move highlight logic to circle component
-
   const dispatch = useAppDispatch();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 
@@ -67,7 +62,7 @@ const QuestionTracker: React.FC<QuestionTrackerProps> = () => {
   const { questionCount } = activeExam.exam;
 
   return (
-    <div>
+    <div className={classes.quesTracker}>
       <div className={classes.questionCircles}>
         <Grid container rowSpacing={2} justifyContent="center">
           {Array.from(Array(questionCount).keys()).map((i) => (

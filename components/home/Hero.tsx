@@ -18,8 +18,6 @@ const Hero: React.FC<HeroProps> = () => {
   return (
     <React.Fragment>
       <section className={classes.heroSection}>
-        {/* <h1>Anti-Cheat Exam App</h1> */}
-
         <Container>
           <Stack
             direction="row"
@@ -70,15 +68,6 @@ const Hero: React.FC<HeroProps> = () => {
                     </Button>
                   </Link>
                 )}
-
-                {/* <Button
-                  startIcon={<ArrowOutwardIcon />}
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                >
-                  Login
-                </Button> */}
               </Stack>
             </div>
 
