@@ -5,6 +5,7 @@
   background-size: 100% 80%;
   min-height: 100%;
   padding-top: 6rem;
+  padding-top: 10%;
 
   .heroText {
     max-width: 50%;
@@ -15,6 +16,7 @@
     font-weight: 800;
     color: black;
     margin: 2rem auto;
+    text-transform: uppercase;
   }
 
   p {
@@ -33,7 +35,7 @@
   .phone {
     width: 300px;
     height: auto;
-    margin-top: 5rem;
+    // margin-top: 5rem;
 
     img {
       max-width: 100%;

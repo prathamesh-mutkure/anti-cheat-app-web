@@ -22,12 +22,15 @@ const Hero: React.FC<HeroProps> = () => {
           <Stack
             direction="row"
             justifyContent="space-between"
-            alignItems="center"
+            alignItems="start"
           >
             <div className={classes.heroText}>
-              <h1>Online Exam - Made Fairer</h1>
+              <h1>Online exams made fairer</h1>
 
-              <p>AI-enabled cheating detection</p>
+              <p>
+                Detect cheating in online exams with the power of Artificial
+                Intelligence & Machine Learning
+              </p>
 
               <Stack direction="row" className={classes.buttonGroup}>
                 <Link

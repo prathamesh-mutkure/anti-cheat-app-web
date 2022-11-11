@@ -56,6 +56,10 @@ const ElevationScroll: React.FC<ElevationScrollProps> = ({
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
     color: trigger ? "default" : "transparent",
+    // sx: {
+    //   paddingTop: trigger ? "1rem" : "1rem",
+    //   paddingBottom: trigger ? "1rem" : "1rem",
+    // },
   });
 };
 
@@ -120,11 +124,10 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
 
       <ElevationScroll>
         <AppBar
-          sx={
-            {
-              // boxShadow: "none",
-            }
-          }
+          sx={{
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+          }}
         >
           <Container>
             <Toolbar>
