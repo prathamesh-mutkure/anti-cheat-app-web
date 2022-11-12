@@ -1,53 +1,63 @@
 import {
+  Avatar,
   Card,
   CardContent,
   CardMedia,
   Container,
   Grid,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import classes from "./home.module.scss";
-import TrackChangesIcon from "@mui/icons-material/TrackChanges";
+import Image from "next/image";
 
 interface FeaturesProps {}
 
 const featureList = [
   {
-    icon: "",
+    icon: "ai_icon.png",
     title: "AI Face Detection",
     content:
-      "We used AI and ML to detect cheating by tracking student’s facial movements",
+      "Advance AI and ML to detect cheating by tracking student’s facial movements",
   },
   {
-    icon: "",
+    icon: "cross_platform.png",
     title: "Cross Platform",
     content: "This platform is availabe on Web, Android and iOS",
+    padding: "12px",
+    color: "darkmagenta",
   },
   {
-    icon: "",
+    icon: "phone_lock_icon.png",
     title: "Blocks Screen Capture",
     content: "The mobile version of the app blocks any form of screen capture",
+    padding: "12px",
+    color: "lightblue",
   },
   {
-    icon: "",
+    icon: "cross_icon.svg",
     title: "Blocks App Exit",
-    content: "The user cannot exit the app or the website during exam",
+    content: "The user cannot exit the app or change tab during exam",
+    padding: "0px",
   },
   {
-    icon: "",
+    icon: "assesment_icon.svg",
     title: "Assesment and Auditing",
     content: "Support for instant assessment and auditing",
+    padding: "0px",
   },
   {
-    icon: "",
+    icon: "video_icon.svg",
+    color: "#DD7F6B",
     title: "Video Proctoring",
     content: "Support for live video proctoring (future support)",
   },
   {
-    icon: "",
+    icon: "comm_icon.svg",
     title: "Live Communication",
-    content: "Live real time communication with user (future support)",
+    content:
+      "Live real time communication between user and proctor (future support)",
+    padding: "12px",
+    color: "midnightblue",
   },
 ];
 
@@ -74,14 +84,26 @@ const Features: React.FC<FeaturesProps> = () => {
                     boxShadow: "0 5px 25px rgb(0 0 0 / 8%)",
                     padding: "1rem",
                     height: "100%",
+                    textAlign: "center",
                   }}
                 >
-                  <CardMedia
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    <TrackChangesIcon />
+                  <CardMedia>
+                    <Avatar
+                      sx={{
+                        height: "60px",
+                        width: "60px",
+                        padding: feature.padding ?? "4px",
+                        backgroundColor: feature.color,
+                        margin: "0 auto",
+                      }}
+                    >
+                      <Image
+                        src={`/images/icon/${feature.icon}`}
+                        height="64px"
+                        width="64px"
+                        alt="icon"
+                      />
+                    </Avatar>
                   </CardMedia>
 
                   <CardContent>

@@ -1,8 +1,6 @@
 import React from "react";
-import { useAppSelector } from "../../hooks";
-import { useTimer } from "react-timer-hook";
 import classes from "./home.module.scss";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack } from "@mui/material";
 import Image from "next/image";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
@@ -21,7 +19,7 @@ const Hero: React.FC<HeroProps> = () => {
         <Container>
           <Stack
             direction="row"
-            justifyContent="space-between"
+            justifyContent="space-around"
             alignItems="start"
           >
             <div className={classes.heroText}>
