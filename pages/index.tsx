@@ -1,6 +1,4 @@
-import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 import Contact from "../components/home/contact";
 import Features from "../components/home/features";
 import Footer from "../components/home/footer";
