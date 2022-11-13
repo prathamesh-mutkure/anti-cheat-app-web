@@ -22,6 +22,8 @@ import WarningModal from "../../components/exam/exam-modals";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+const TESTING = false;
+
 // TODO (CHEAT DETECTION):
 //
 // If change tab more than 3 times, submit exam
@@ -229,7 +231,7 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
       </Grid>
 
       {/* Disabled for testing */}
-      {false && (
+      {!TESTING && (
         <WarningModal
           open={isModalVisible}
           title={modalData?.title}

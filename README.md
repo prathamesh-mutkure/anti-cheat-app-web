@@ -1,4 +1,6 @@
 
+
+
   
   
   
@@ -24,7 +26,7 @@ This is the web version of my [Anti-Cheat Exam App](https://github.com/prathames
 
 </p>
 
-- [Project Demo](https://anti-cheat-exam-app.vercel.app/)
+- <a href="https://anti-cheat-exam-app.vercel.app/" target="_blank">Demo</a>
 
 - [About Project](#about)
 
@@ -93,6 +95,8 @@ I'm currently making some final changes to the web app and will soon update this
   
 
    <img width="1835" alt="Screenshot 2022-11-13 at 5 59 55 PM" src="https://user-images.githubusercontent.com/28570857/201521732-02537090-8757-451a-9d31-49df9bd6aad3.png">
+
+   <img width="1801" alt="Screenshot 2022-11-13 at 6 19 48 PM" src="https://user-images.githubusercontent.com/28570857/201522628-e2007a34-fe57-44cf-bc45-a6a17963ed4c.png">
 
   
   
