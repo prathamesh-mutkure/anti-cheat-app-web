@@ -22,7 +22,7 @@ const ExamCamera: React.FC<ExamCameraProps> = () => {
   const faceDetectionRef = useRef<FaceDetection>(null);
   const realtimeDetection = true;
 
-  const frameRefresh = 30;
+  const frameRefresh = 10;
   let currentFrame = useRef(0);
 
   const [chetingStatus, setChetingStatus] = useState("");
