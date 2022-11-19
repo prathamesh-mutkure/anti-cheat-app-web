@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watch",
+    "test:ci": "jest --ci"
   },
   "husky": {
     "hooks": {
@@ -38,11 +40,17 @@
     "react-webcam": "^7.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.2.0",
+    "@testing-library/user-event": "14.2.0",
+    "@types/jest": "^29.2.3",
     "@types/node": "^18.11.0",
     "@types/react": "^18.0.21",
     "eslint": "8.25.0",
     "eslint-config-next": "12.3.1",
     "husky": "^8.0.2",
+    "jest": "28.1.0",
+    "jest-environment-jsdom": "28.1.0",
     "lint-staged": "^13.0.3",
     "sass": "^1.55.0",
     "typescript": "^4.8.4"
