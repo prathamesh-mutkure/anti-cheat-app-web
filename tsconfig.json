@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "typeRoots": ["./types"]
+    "typeRoots": ["./types", "jest", "node"],
+    "types": ["jest", "node", "@types/jest"]
   },
   "include": [
     "next-env.d.ts",
@@ -22,7 +23,10 @@
     "types/next-auth.d.ts",
     "auth.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "__tests__/**/*",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ],
   "exclude": ["node_modules"]
 }
