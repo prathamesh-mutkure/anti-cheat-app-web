@@ -28,7 +28,7 @@
     "@mediapipe/face_detection": "^0.4.1646425229",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
-    "@reduxjs/toolkit": "^1.8.6",
+    "@reduxjs/toolkit": "^1.9.0",
     "moment": "^2.29.4",
     "next": "12.3.1",
     "next-auth": "^4.15.0",
