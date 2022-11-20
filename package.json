@@ -27,7 +27,7 @@
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/face_detection": "^0.4.1646425229",
     "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.10",
+    "@mui/material": "^5.10.14",
     "@reduxjs/toolkit": "^1.8.6",
     "moment": "^2.29.4",
     "next": "12.3.1",
