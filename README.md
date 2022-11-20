@@ -45,6 +45,7 @@ This is the web version of my [Anti-Cheat Exam App](https://github.com/prathames
 
 - [Important Points](#imp-points)
 - [Getting Started Instructions](#instructions)
+- [Test Cases](#test-cases)
 - [Links](#links)
 - [Contact](#contact)
 
@@ -197,7 +198,11 @@ I'm currently making some final changes to the web app and will soon update this
 
 7. Open `http://localhost:3000` with your browser to see the app
 
-  
+
+## Test Cases <a  id="test-cases">  </a>
+
+
+To make sure your changes don't break anything, run `npm run dev` to run unit tests. 
   
  
 <a id="links"> </a>
