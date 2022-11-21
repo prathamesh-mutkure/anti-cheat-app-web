@@ -33,6 +33,7 @@ import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 interface NavBarHomeProps {
   window?: () => Window;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
 interface NavButtonProps {
@@ -84,32 +85,28 @@ const NavButton: React.FC<NavButtonProps> = ({ text, onClick }) => {
 const drawerWidth = 240;
 
 const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
-  const { window } = props;
+  const { window, loadingBarRef } = props;
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
   const session = useSession();
 
-  useEffect(() => {
-    return () => {
-      loadingBarRef?.current?.complete();
-    };
-  }, []);
+  const showLoadingWidget = () => {
+    loadingBarRef.current.continuousStart(50);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleLogin = async () => {
-    loadingBarRef.current.continuousStart(50);
-    router.push("/auth/login");
   };
 
   const handleLogout = async () => {
     loadingBarRef.current.continuousStart(50);
     await signOut({ redirect: false });
     loadingBarRef.current.complete();
+  };
+
+  const gotoPage = async (url: string) => {
+    loadingBarRef.current.continuousStart(50);
+    router.push(url);
   };
 
   const drawer = (
@@ -180,13 +177,17 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
                 </Link>
 
                 {session.status === "authenticated" && (
-                  <Link href="/dashboard">
-                    <NavButton text="Dashboard" />
-                  </Link>
+                  <NavButton
+                    text="Dashboard"
+                    onClick={() => gotoPage("/dashboard")}
+                  />
                 )}
 
                 {session.status === "unauthenticated" && (
-                  <NavButton text="Login" onClick={handleLogin} />
+                  <NavButton
+                    text="Login"
+                    onClick={() => gotoPage("/auth/login")}
+                  />
                 )}
 
                 {session.status === "authenticated" && (
@@ -220,7 +221,6 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
           {drawer}
         </Drawer>
       </Box>
-      <LoadingBar color="#1665C0" ref={loadingBarRef} />
     </React.Fragment>
   );
 };
