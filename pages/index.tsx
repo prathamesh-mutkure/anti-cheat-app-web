@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import Contact from "../components/home/contact";
 import Features from "../components/home/features";
 import Footer from "../components/home/footer";
-import Hero from "../components/home/Lol";
+import Hero from "../components/home/hero";
 import NavBarHome from "../components/home/navbar-home";
 
 interface HomePageProps {}
