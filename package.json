@@ -22,7 +22,7 @@
     ]
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.4",
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/face_detection": "^0.4.1646425229",
