@@ -36,11 +36,9 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
   const router = useRouter();
   const session = useSession();
 
-  useEffect(() => {
-    return () => {
-      loadingBarRef?.current?.complete();
-    };
-  }, []);
+  const showLoading = () => {
+    loadingBarRef.current.continuousStart(50);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -94,6 +92,7 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
               width="48px"
               alt="Logo"
               className={classes.navLogo}
+              onClick={showLoading}
             />
           </Link>
 
@@ -103,7 +102,9 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Link href="/">
-              <Button sx={{ color: "#fff" }}>Home</Button>
+              <Button sx={{ color: "#fff" }} onClick={showLoading}>
+                Home
+              </Button>
             </Link>
 
             {session.status === "authenticated" && (
