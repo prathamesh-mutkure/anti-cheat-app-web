@@ -92,9 +92,9 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleLogout = () => {
-    signOut({ redirect: false });
-    router.replace("/auth/login");
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    // router.replace("/auth/login");
   };
 
   const drawer = (

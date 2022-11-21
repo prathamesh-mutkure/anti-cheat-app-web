@@ -38,8 +38,8 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleLogout = () => {
-    signOut({ redirect: false });
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
     router.replace("/auth/login");
   };
 

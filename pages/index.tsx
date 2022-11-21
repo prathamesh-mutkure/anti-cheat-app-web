@@ -1,17 +1,13 @@
-import { signOut } from "next-auth/react";
+import { GetStaticProps } from "next";
 import Contact from "../components/home/contact";
 import Features from "../components/home/features";
 import Footer from "../components/home/footer";
-import Hero from "../components/home/Hero";
-import NavBarHome from "../components/home/NavBarHome";
+import Hero from "../components/home/hero";
+import NavBarHome from "../components/home/navbar-home";
 
 interface HomePageProps {}
 
 const HomePage: React.FC<HomePageProps> = ({}) => {
-  const handleLogout = () => {
-    signOut({ redirect: false });
-  };
-
   return (
     <>
       <NavBarHome />
@@ -23,4 +19,11 @@ const HomePage: React.FC<HomePageProps> = ({}) => {
   );
 };
 
+const getStaticProps: GetStaticProps = (context) => {
+  return {
+    props: {},
+  };
+};
+
 export default HomePage;
+export { getStaticProps };

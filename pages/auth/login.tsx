@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import Head from "next/head";
 import LoginForm from "../../components/auth/login-form";
-import NavBarHome from "../../components/home/NavBarHome";
+import NavBarHome from "../../components/home/navbar-home";
 
 const LoginPage = () => {
   return (
