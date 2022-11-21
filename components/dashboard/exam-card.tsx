@@ -20,14 +20,16 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import moment, { monthsShort } from "moment";
 import { Stack } from "@mui/system";
+import { LoadingBarRef } from "react-top-loading-bar";
 
 // TODO: Disable button for past or future exam
 
 interface ExamCardProps {
   exam: AssignedExam;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
-const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
+const ExamCard: React.FC<ExamCardProps> = ({ exam, loadingBarRef }) => {
   const startDate = new Date(exam.startDate);
   const endDate = new Date(exam.endDate);
 
@@ -112,6 +114,11 @@ const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
               sx={{
                 ml: 2,
                 mb: 1,
+              }}
+              onClick={() => {
+                console.log("LOL");
+
+                loadingBarRef.current.continuousStart(50);
               }}
             >
               Start Exam

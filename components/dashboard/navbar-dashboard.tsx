@@ -24,14 +24,14 @@ import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 interface NavBarDashboardProps {
   window?: () => Window;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
 const drawerWidth = 240;
 
 const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
-  const { window } = props;
+  const { window, loadingBarRef } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
 
   const router = useRouter();
   const session = useSession();
@@ -50,7 +50,6 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
     loadingBarRef.current.continuousStart(50);
     await signOut({ redirect: false });
     await router.replace("/auth/login");
-    // loadingBarRef.current.complete();
   };
 
   const drawer = (
@@ -154,7 +153,6 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
           {drawer}
         </Drawer>
       </Box>
-      <LoadingBar color="#ffffff" ref={loadingBarRef} />
     </React.Fragment>
   );
 };
