@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AppBarExam from "../../components/exam/app-bar-exam";
 import ExamButtonsGroup from "../../components/exam/exam-buttons";
 import ExamCamera from "../../components/exam/exam-camera";
@@ -21,6 +21,7 @@ import {
 import WarningModal from "../../components/exam/exam-modals";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 const TESTING = false;
 
@@ -54,6 +55,8 @@ interface ExamPageProps {
 const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
+
   const activeExam = useAppSelector((state) => state.exam.activeExam);
 
   const [didLeaveExam, setDidLeaveExam] = useState(false);
@@ -99,18 +102,6 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
       });
     };
   }, []);
-
-  // TODO: Fix back button
-  // useEffect(() => {
-  //   if (router.asPath === window.location.pathname) {
-  //     window.onpopstate = (event: PopStateEvent) => {
-  //       event.preventDefault();
-  //       history.go(1);
-  //     };
-  //   }
-
-  //   return () => {};
-  // }, [router]);
 
   // Tab change
   useEffect(() => {
@@ -187,7 +178,12 @@ const ExamPage: React.FC<ExamPageProps> = ({ exam, error }) => {
         <title>{exam.name}</title>
       </Head>
 
-      <AppBarExam examName={activeExam.exam.name} />
+      <LoadingBar color="#ffffff" ref={loadingBarRef} />
+
+      <AppBarExam
+        examName={activeExam.exam.name}
+        loadingBarRef={loadingBarRef}
+      />
 
       <Grid
         container
