@@ -2,6 +2,7 @@ import React, {
   JSXElementConstructor,
   ReactElement,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
@@ -28,6 +29,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 interface NavBarHomeProps {
   window?: () => Window;
@@ -86,15 +88,28 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
   const session = useSession();
+
+  useEffect(() => {
+    return () => {
+      loadingBarRef?.current?.complete();
+    };
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogin = async () => {
+    loadingBarRef.current.continuousStart(50);
+    router.push("/auth/login");
+  };
+
   const handleLogout = async () => {
+    loadingBarRef.current.continuousStart(50);
     await signOut({ redirect: false });
-    // router.replace("/auth/login");
+    loadingBarRef.current.complete();
   };
 
   const drawer = (
@@ -171,9 +186,7 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
                 )}
 
                 {session.status === "unauthenticated" && (
-                  <Link href="/auth/login">
-                    <NavButton text="Login" />
-                  </Link>
+                  <NavButton text="Login" onClick={handleLogin} />
                 )}
 
                 {session.status === "authenticated" && (
@@ -207,6 +220,7 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
           {drawer}
         </Drawer>
       </Box>
+      <LoadingBar color="#1665C0" ref={loadingBarRef} />
     </React.Fragment>
   );
 };
