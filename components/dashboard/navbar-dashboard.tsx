@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AppBar,
   Box,
@@ -20,27 +20,34 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 interface NavBarDashboardProps {
   window?: () => Window;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
 const drawerWidth = 240;
 
 const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
-  const { window } = props;
+  const { window, loadingBarRef } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const router = useRouter();
 
+  const router = useRouter();
   const session = useSession();
+
+  const showLoading = () => {
+    loadingBarRef.current.continuousStart(50);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleLogout = async () => {
+    loadingBarRef.current.continuousStart(50);
     await signOut({ redirect: false });
-    router.replace("/auth/login");
+    await router.replace("/auth/login");
   };
 
   const drawer = (
@@ -85,6 +92,7 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
               width="48px"
               alt="Logo"
               className={classes.navLogo}
+              onClick={showLoading}
             />
           </Link>
 
@@ -94,7 +102,9 @@ const NavBarDashboard: React.FC<NavBarDashboardProps> = (props) => {
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Link href="/">
-              <Button sx={{ color: "#fff" }}>Home</Button>
+              <Button sx={{ color: "#fff" }} onClick={showLoading}>
+                Home
+              </Button>
             </Link>
 
             {session.status === "authenticated" && (

@@ -8,34 +8,17 @@ import {
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useAppDispatch } from "../../hooks";
 import classes from "./login-form.module.scss";
 import { toast } from "react-toastify";
 import { Box, Container } from "@mui/system";
-import Link from "next/link";
 import Image from "next/image";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Footer from "../home/footer";
+import { LoadingBarRef } from "react-top-loading-bar";
 
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Anti-Cheat Exam App
-      </Link>
-      {" - "}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-};
+interface LoginFormProps {
+  loadingBarRef: React.RefObject<LoadingBarRef>;
+}
 
-const LoginForm = () => {
+const LoginForm: React.FC<LoginFormProps> = ({ loadingBarRef }) => {
   const router = useRouter();
 
   const [formData, setData] = useState({
@@ -86,6 +69,7 @@ const LoginForm = () => {
     }
 
     setLoading(true);
+    loadingBarRef?.current?.continuousStart(50);
 
     try {
       const result = await signIn("credentials", {
@@ -107,8 +91,10 @@ const LoginForm = () => {
       console.log(e);
       toast(e.message || "Login failed, please try again!");
       setLoading(false);
+      loadingBarRef?.current?.complete();
     } finally {
       // setLoading(false);
+      loadingBarRef?.current?.complete();
     }
   };
 

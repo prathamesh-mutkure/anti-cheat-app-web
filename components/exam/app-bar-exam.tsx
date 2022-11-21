@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import { LoadingBarRef } from "react-top-loading-bar";
 
 // TODO:
 //
@@ -15,9 +16,10 @@ import { useSession } from "next-auth/react";
 
 interface AppBarExamProps {
   examName: string;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
-const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
+const AppBarExam: React.FC<AppBarExamProps> = ({ examName, loadingBarRef }) => {
   const session = useSession();
   const activeExam = useAppSelector((state) => state.exam.activeExam);
   const router = useRouter();
@@ -25,6 +27,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
 
   const onEndExam = async () => {
     setIsLoading(true);
+    loadingBarRef.current.continuousStart(50);
 
     try {
       const result = await submitExam(
@@ -40,6 +43,7 @@ const AppBarExam: React.FC<AppBarExamProps> = ({ examName }) => {
       toast(e.message || "Failed to submit exam, please try again!");
     } finally {
       setIsLoading(false);
+      loadingBarRef.current.continuousStart(50);
     }
   };
 

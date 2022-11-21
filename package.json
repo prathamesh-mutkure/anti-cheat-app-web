@@ -37,6 +37,7 @@
     "react-redux": "^8.0.4",
     "react-timer-hook": "^3.0.5",
     "react-toastify": "^9.0.8",
+    "react-top-loading-bar": "^2.3.1",
     "react-webcam": "^7.0.1"
   },
   "devDependencies": {

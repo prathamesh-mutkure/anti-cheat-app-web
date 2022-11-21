@@ -1,9 +1,4 @@
-import React, {
-  JSXElementConstructor,
-  ReactElement,
-  useEffect,
-  useState,
-} from "react";
+import React, { JSXElementConstructor, ReactElement, useState } from "react";
 import {
   AppBar,
   Box,
@@ -28,9 +23,11 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 
 interface NavBarHomeProps {
   window?: () => Window;
+  loadingBarRef: React.RefObject<LoadingBarRef>;
 }
 
 interface NavButtonProps {
@@ -82,19 +79,28 @@ const NavButton: React.FC<NavButtonProps> = ({ text, onClick }) => {
 const drawerWidth = 240;
 
 const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
-  const { window } = props;
+  const { window, loadingBarRef } = props;
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const session = useSession();
+
+  const showLoadingWidget = () => {
+    loadingBarRef.current.continuousStart(50);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleLogout = async () => {
+    loadingBarRef.current.continuousStart(50);
     await signOut({ redirect: false });
-    // router.replace("/auth/login");
+    loadingBarRef.current.complete();
+  };
+
+  const gotoPage = async (url: string) => {
+    loadingBarRef.current.continuousStart(50);
+    router.push(url);
   };
 
   const drawer = (
@@ -165,15 +171,17 @@ const NavBarHome: React.FC<NavBarHomeProps> = (props) => {
                 </Link>
 
                 {session.status === "authenticated" && (
-                  <Link href="/dashboard">
-                    <NavButton text="Dashboard" />
-                  </Link>
+                  <NavButton
+                    text="Dashboard"
+                    onClick={() => gotoPage("/dashboard")}
+                  />
                 )}
 
                 {session.status === "unauthenticated" && (
-                  <Link href="/auth/login">
-                    <NavButton text="Login" />
-                  </Link>
+                  <NavButton
+                    text="Login"
+                    onClick={() => gotoPage("/auth/login")}
+                  />
                 )}
 
                 {session.status === "authenticated" && (

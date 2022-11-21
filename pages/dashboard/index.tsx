@@ -1,7 +1,8 @@
 import { GetServerSideProps } from "next";
 import { getSession, useSession } from "next-auth/react";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 import Dashboard from "../../components/dashboard/dashboard";
 import NavBarDashboard from "../../components/dashboard/navbar-dashboard";
 import { getAssignedExams } from "../../helpers/api/exam-api";
@@ -16,7 +17,7 @@ interface DashboardPageProps {
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
   const dispatch = useAppDispatch();
-  const session = useSession();
+  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
 
   useEffect(() => {
     if (!exams) {
@@ -35,8 +36,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ exams, error }) => {
       <Head>
         <title>Anti-Cheat Exam App Dashboard</title>
       </Head>
-      <NavBarDashboard />
-      <Dashboard />
+      <LoadingBar color="#ffffff" ref={loadingBarRef} />
+      <NavBarDashboard loadingBarRef={loadingBarRef} />
+      <Dashboard loadingBarRef={loadingBarRef} />
     </div>
   );
 };

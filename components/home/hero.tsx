@@ -7,11 +7,18 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import LoginIcon from "@mui/icons-material/Login";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { LoadingBarRef } from "react-top-loading-bar";
 
-interface HeroProps {}
+interface HeroProps {
+  loadingBarRef: React.RefObject<LoadingBarRef>;
+}
 
-const Hero: React.FC<HeroProps> = () => {
+const Hero: React.FC<HeroProps> = ({ loadingBarRef }) => {
   const session = useSession();
+
+  const showLoadingWidget = () => {
+    loadingBarRef.current.continuousStart(50);
+  };
 
   return (
     <React.Fragment>
@@ -52,6 +59,7 @@ const Hero: React.FC<HeroProps> = () => {
                       variant="contained"
                       size="large"
                       color="primary"
+                      onClick={showLoadingWidget}
                     >
                       Dashboard
                     </Button>
@@ -64,6 +72,7 @@ const Hero: React.FC<HeroProps> = () => {
                       size="large"
                       color="primary"
                       disabled={session.status === "loading"}
+                      onClick={showLoadingWidget}
                     >
                       Login
                     </Button>
