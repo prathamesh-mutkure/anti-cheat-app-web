@@ -111,11 +111,10 @@ I'm currently making some final changes to the web app and will soon update this
    - The face detection is performed on-device without sending anything to the backend
 
    - Thus, Face detection is fast and real-time
-   - The demo is from the mobile app but works exactly the same in the web app
 
   
 
-     ![image](https://user-images.githubusercontent.com/28570857/179022316-45cf8a11-9d5a-411f-b4ce-89d1ea02e478.png)
+      https://user-images.githubusercontent.com/28570857/205257552-5aa0235b-ddee-463a-b746-2ecc06ba8c4f.mp4
 
   
   
