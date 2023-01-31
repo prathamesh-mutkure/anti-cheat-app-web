@@ -6,8 +6,8 @@ import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 import LoginForm from "../../components/auth/login-form";
 import NavBarHome from "../../components/home/navbar-home";
 
-const LoginPage = () => {
-  const loadingBarRef: React.Ref<LoadingBarRef> = useRef(null);
+const LoginPage: React.FC = () => {
+  const loadingBarRef = useRef<LoadingBarRef>(null);
 
   return (
     <div>
@@ -23,23 +23,15 @@ const LoginPage = () => {
   );
 };
 
-const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
 
   if (!session) {
-    return {
-      props: {},
-    };
+    return { props: {} };
   }
 
   return {
-    redirect: {
-      destination: "/dashboard",
-      permanent: false,
-    },
-    props: {
-      session: session,
-    },
+    redirect: { destination: "/dashboard", permanent: false },
   };
 };
 
