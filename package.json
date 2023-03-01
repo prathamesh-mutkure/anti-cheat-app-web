@@ -26,7 +26,7 @@
     "@emotion/styled": "^11.10.4",
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/face_detection": "^0.4.1646425229",
-    "@mui/icons-material": "^5.10.9",
+    "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.10.10",
     "@reduxjs/toolkit": "^1.8.6",
     "moment": "^2.29.4",
